@@ -2,20 +2,22 @@ import Image from "next/image";
 
 const Footer = () => {
 	return (
-		<footer className="bg-gray-800 text-white px-20 py-6">
-			<section className="flex flex-col justify-between items-start sm:flex-row sm:justify-between">
-				<div className="flex flex-col space-y-3">
-					<Image
-						src="/assets/images/logo-footer.png"
-						alt=""
-						width={200}
-						height={50}
-					/>
+		<footer className="bg-[#29292A] text-white px-5 py-6 pt-20">
+			<section className="grid gap-y-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 justify-between items-start">
+				<div className="flex flex-col space-y-3 text-center sm:text-left relative">
+					<div className="mx-auto sm:mx-0">
+						<Image
+							src="/assets/images/logo-footer.png"
+							alt=""
+							width={200}
+							height={50}
+						/>
+					</div>
 					<p>
 						Lorem ipsum dolor sit, amet consectetur adipisicing
 						elit.
 					</p>
-					<div className="flex gap-4 text-[#FF6F00]">
+					<div className="space-x-4 text-[#FF6F00]">
 						<a
 							href="https://www.facebook.com"
 							className="hover:text-white"
@@ -42,37 +44,56 @@ const Footer = () => {
 						</a>
 					</div>
 				</div>
-				<nav>
-					<h1>Get In Touch</h1>
-					<h5>457 Morningview Lane, NY</h5>
-					<h5>example@mail.com</h5>
-					<h5>+1 (234) 567 890</h5>
-					<h5>Mon - Fri: 09.00 - 16.00</h5>
-				</nav>
-				<nav>
-					<h1>About Us</h1>
-					<h5>Our Story</h5>
-					<h5>Visit Us</h5>
-					<h5>FAQs Page</h5>
-					<h5>Blog Post</h5>
-					<h5>Contact</h5>
-				</nav>
-				<nav>
-					<h1>Latest News</h1>
-					<h5>
-						26 MAY 2022 <br /> Sugar reduction is key for a healthy
-						future
+				<nav className="space-y-2">
+					<h1 className="text-3xl">Get In Touch</h1>
+					<h5 className="text-sm font-light">
+						457 Morningview Lane, NY
 					</h5>
-					<h5>
-						26 MAY 2022 <br /> Trends food and beverage industry
-						today
+					<h5 className="text-sm font-light">example@mail.com</h5>
+					<h5 className="text-sm font-light">+1 (234) 567 890</h5>
+					<h5 className="text-sm font-light">
+						Mon - Fri: 09.00 - 16.00
 					</h5>
-					<h5>
-						26 MAY 2022 <br /> Going banana (bread) over bread
-						baking
+				</nav>
+				<nav className="space-y-2">
+					<h1 className="text-3xl">About Us</h1>
+					<h5 className="text-sm font-light cursor-pointer hover:text-[#FF6F00]">
+						Our Story
+					</h5>
+					<h5 className="text-sm font-light cursor-pointer hover:text-[#FF6F00]">
+						Visit Us
+					</h5>
+					<h5 className="text-sm font-light cursor-pointer hover:text-[#FF6F00]">
+						FAQs Page
+					</h5>
+					<h5 className="text-sm font-light cursor-pointer hover:text-[#FF6F00]">
+						Blog Post
+					</h5>
+					<h5 className="text-sm font-light cursor-pointer hover:text-[#FF6F00]">
+						Contact
+					</h5>
+				</nav>
+				<nav className="space-y-3">
+					<h1 className="text-3xl">Latest News</h1>
+					<h5 className="hover:text-[#FF6F00] cursor-pointer duration-300">
+						<span className="text-[#FF6F00]">26 MAY 2022</span>{" "}
+						<br />
+						Sugar reduction is key for a healthy future
+					</h5>
+					<h5 className="hover:text-[#FF6F00] cursor-pointer duration-300">
+						<span className="text-[#FF6F00]">26 MAY 2022</span>{" "}
+						<br /> Trends food and beverage industry today
+					</h5>
+					<h5 className="hover:text-[#FF6F00] cursor-pointer duration-300">
+						<span className="text-[#FF6F00]">26 MAY 2022</span>{" "}
+						<br /> Going banana (bread) over bread baking
 					</h5>
 				</nav>
 			</section>
+			<div className="my-10 h-px w-full border-t border-gray-600" />
+			<p className="text-center">
+				Copyright © {new Date().getFullYear()}. All rights reserved.
+			</p>
 		</footer>
 	);
 };

@@ -6,9 +6,10 @@ const About = () => {
 			<Image
 				src="/assets/images/about.jpg"
 				alt="Section Image"
-				width={1200}
+				width={600}
 				height={600}
 			/>
+			<p>About Wholly Desserts</p>
 		</section>
 	);
 };

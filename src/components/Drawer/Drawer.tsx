@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { useState } from "react";
+import { AiOutlineClose } from "react-icons/ai";
 
 const Drawer = ({
 	isOpen,
@@ -29,12 +30,10 @@ const Drawer = ({
 						width={200}
 						height={50}
 					/>
-					<Image
-						src={"/assets/icons/xmark.svg"}
-						alt=""
-						width={20}
-						height={20}
-						onClick={() => setIsOpen()}
+
+					<AiOutlineClose
+						className="cursor-pointer w-6 h-6"
+						onClick={setIsOpen}
 					/>
 				</header>
 				<ul className="pl-8 pt-10 space-y-4">

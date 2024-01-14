@@ -2,7 +2,11 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import { RiMenu3Fill } from "react-icons/ri";
+import { TbSearch } from "react-icons/tb";
 import Drawer from "../Drawer/Drawer";
+import { FaChevronDown } from "react-icons/fa";
+
 import "./Navbar.css";
 
 const Navbar = () => {
@@ -28,24 +32,16 @@ const Navbar = () => {
 						<li className="nav-link">HOME</li>
 						<li className="nav-link">ABOUT</li>
 						<li className="nav-link">MENU</li>
-						<li className="nav-link">PAGES ∨</li>
+						<li className="nav-link flex items-center gap-2">
+							PAGES <FaChevronDown />
+						</li>
 						<li className="nav-link">CONTACT</li>
 					</ul>
 				</nav>
 				<div className="flex gap-6">
-					<Image
-						src="/assets/icons/search.svg"
-						alt=""
-						width={20}
-						height={20}
-						className="cursor-pointer"
-					/>
-					<Image
-						src="/assets/icons/hamburger.svg"
-						alt=""
-						width={20}
-						height={20}
-						className="cursor-pointer"
+					<TbSearch className="cursor-pointer w-6 h-6 hover:text-[#FF6F00] transition duration-300" />
+					<RiMenu3Fill
+						className="cursor-pointer w-6 h-6 hover:text-[#FF6F00] transition duration-300"
 						onClick={() => setIsDrawerOpen(true)}
 					/>
 				</div>

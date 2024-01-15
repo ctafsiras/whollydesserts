@@ -35,13 +35,13 @@ const WorkSummary = () => {
 			</h2>
 			<h3 className="text-center text-5xl">Making Sweet Things Happen</h3>
 
-			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-32">
+			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 gap-y-12 mt-32">
 				{steps.map((step, i) => (
 					<div
 						key={i}
-						className={`text-center ${i % 2 === 0 && "-mt-12"}`}
+						className={`text-center ${i % 2 === 0 && "md:-mt-12"}`}
 					>
-						<div className="relative w-56 h-56 mx-auto hover:scale-110 transition duration-300">
+						<div className="relative w-80 h-80 md:w-60 md:h-60 mx-auto hover:scale-110 transition duration-300">
 							<Image
 								src={step.imgSrc}
 								alt={step.title}

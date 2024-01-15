@@ -5,6 +5,7 @@ import FeaturedFoods from "@/components/Home/FeaturedFoods";
 import Menu from "@/components/Home/Menu";
 import ProductSummary from "@/components/Home/ProductSummary";
 import Testimonial from "@/components/Home/Testimonial";
+import WorkSummary from "@/components/Home/WorkSummary";
 
 export default function Home() {
 	return (
@@ -16,6 +17,7 @@ export default function Home() {
 			<Menu />
 			<FeaturedFoods />
 			<BreadSelection />
+			<WorkSummary />
 		</main>
 	);
 }

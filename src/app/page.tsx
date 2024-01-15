@@ -1,5 +1,6 @@
 import About from "@/components/Home/About";
 import Banner from "@/components/Home/Banner";
+import BreadSelection from "@/components/Home/BreadSelection";
 import FeaturedFoods from "@/components/Home/FeaturedFoods";
 import Menu from "@/components/Home/Menu";
 import ProductSummary from "@/components/Home/ProductSummary";
@@ -14,6 +15,7 @@ export default function Home() {
 			<ProductSummary />
 			<Menu />
 			<FeaturedFoods />
+			<BreadSelection />
 		</main>
 	);
 }

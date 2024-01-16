@@ -2,6 +2,7 @@ import About from "@/components/Home/About";
 import Banner from "@/components/Home/Banner";
 import BreadSelection from "@/components/Home/BreadSelection";
 import BreadSelectionTutorial from "@/components/Home/BreadSelectionTutorial";
+import CompanyStats from "@/components/Home/CompanyStats";
 import FeaturedFoods from "@/components/Home/FeaturedFoods";
 import Menu from "@/components/Home/Menu";
 import ProductSummary from "@/components/Home/ProductSummary";
@@ -24,6 +25,7 @@ export default function Home() {
 			<BreadSelectionTutorial />
 			<PromoSection />
 			<TeamSection />
+			<CompanyStats />
 		</main>
 	);
 }

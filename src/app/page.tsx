@@ -1,5 +1,6 @@
 import About from "@/components/Home/About";
 import Banner from "@/components/Home/Banner";
+import BlogSection from "@/components/Home/BlogPosts";
 import BreadSelection from "@/components/Home/BreadSelection";
 import BreadSelectionTutorial from "@/components/Home/BreadSelectionTutorial";
 import CompanyStats from "@/components/Home/CompanyStats";
@@ -26,6 +27,7 @@ export default function Home() {
 			<PromoSection />
 			<TeamSection />
 			<CompanyStats />
+			<BlogSection />
 		</main>
 	);
 }

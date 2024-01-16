@@ -5,12 +5,13 @@ import BreadSelectionTutorial from "@/components/Home/BreadSelectionTutorial";
 import FeaturedFoods from "@/components/Home/FeaturedFoods";
 import Menu from "@/components/Home/Menu";
 import ProductSummary from "@/components/Home/ProductSummary";
+import PromoSection from "@/components/Home/PromoSection";
 import Testimonial from "@/components/Home/Testimonial";
 import WorkSummary from "@/components/Home/WorkSummary";
 
 export default function Home() {
 	return (
-		<main className="py-16">
+		<main>
 			<Banner />
 			<Testimonial />
 			<About />
@@ -20,6 +21,7 @@ export default function Home() {
 			<BreadSelection />
 			<WorkSummary />
 			<BreadSelectionTutorial />
+			<PromoSection />
 		</main>
 	);
 }

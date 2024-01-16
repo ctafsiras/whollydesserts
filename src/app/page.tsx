@@ -6,6 +6,7 @@ import FeaturedFoods from "@/components/Home/FeaturedFoods";
 import Menu from "@/components/Home/Menu";
 import ProductSummary from "@/components/Home/ProductSummary";
 import PromoSection from "@/components/Home/PromoSection";
+import TeamSection from "@/components/Home/TeamSection";
 import Testimonial from "@/components/Home/Testimonial";
 import WorkSummary from "@/components/Home/WorkSummary";
 
@@ -22,6 +23,7 @@ export default function Home() {
 			<WorkSummary />
 			<BreadSelectionTutorial />
 			<PromoSection />
+			<TeamSection />
 		</main>
 	);
 }

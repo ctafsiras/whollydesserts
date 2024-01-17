@@ -5,3 +5,6 @@
 .nav-link:hover {
 	color: #ff6f00;
 }
+.active-link {
+	color: #ff6f00;
+}

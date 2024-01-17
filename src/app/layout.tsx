@@ -2,11 +2,14 @@ import Footer from "@/components/Footer/Footer";
 import Navbar from "@/components/Navbar/Navbar";
 import NewsLetter from "@/components/NewsLetter/NewsLetter";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Abhaya_Libre } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
 
-const inter = Inter({ subsets: ["latin"] });
+const abhayaLibre = Abhaya_Libre({
+	subsets: ["latin"],
+	weight: ["400", "700"],
+});
 
 export const metadata: Metadata = {
 	title: "Wholly Desserts",
@@ -19,8 +22,11 @@ export default function RootLayout({
 	children: React.ReactNode;
 }) {
 	return (
-		<html lang="en">
-			<body className="dark">
+		<html
+			lang="en"
+			className={abhayaLibre.className}
+		>
+			<body>
 				<Providers>
 					<Navbar />
 					{children}

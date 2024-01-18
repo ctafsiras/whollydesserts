@@ -1,3 +1,4 @@
+import ChooseUs from "@/components/About/ChooseUs";
 import OurStory from "@/components/About/OurStory";
 import PageHeader from "@/components/PageHeader/PageHeader";
 import AboutUs from "@/components/Shared/AboutUs";
@@ -13,6 +14,7 @@ export default function About() {
 			<PageHeader title="About Us" />
 			<OurStory />
 			<AboutUs />
+			<ChooseUs />
 			<Testimonial />
 			<FeaturedFoods />
 			<OurTeam />

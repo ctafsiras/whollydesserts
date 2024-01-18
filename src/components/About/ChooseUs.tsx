@@ -47,7 +47,7 @@ const ChooseUs = () => {
 				{columns.map((column) => (
 					<div
 						key={column.title}
-						className="p-10 text-center hover:shadow-large transition duration-300"
+						className="p-10 text-center hover:shadow-large transition duration-300 bg-white"
 					>
 						<span>{column.icon}</span>
 						<h3 className="text-2xl mt-4">{column.title}</h3>

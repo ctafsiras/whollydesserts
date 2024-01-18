@@ -1,4 +1,5 @@
 import ChooseUs from "@/components/About/ChooseUs";
+import FAQ from "@/components/About/FAQ";
 import OurStory from "@/components/About/OurStory";
 import PageHeader from "@/components/PageHeader/PageHeader";
 import AboutUs from "@/components/Shared/AboutUs";
@@ -16,6 +17,7 @@ export default function About() {
 			<AboutUs />
 			<ChooseUs />
 			<Testimonial />
+			<FAQ />
 			<FeaturedFoods />
 			<OurTeam />
 			<CompanyStats />

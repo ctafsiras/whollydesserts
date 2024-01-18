@@ -7,7 +7,7 @@ import { FaChevronRight } from "react-icons/fa";
 const PageHeader = ({ title }: { title: string }) => {
 	const pathname = usePathname();
 	return (
-		<section className="bg-gray-50 py-28">
+		<section className="bg-gray-50 py-20 md:py-24 lg:py-32">
 			<h1 className="text-5xl text-center">{title}</h1>
 			<div className="flex items-center gap-x-4 justify-center text-center font-sans">
 				<Link

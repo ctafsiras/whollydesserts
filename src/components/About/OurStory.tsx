@@ -9,10 +9,10 @@ import { Swiper, SwiperSlide } from "swiper/react";
 
 const OurStory = () => {
 	return (
-		<section className="py-28 px-7 lg:px-0 xl:px-10 space-y-10">
+		<section className="py-16 px-5 lg:px-0 xl:px-[70px] space-y-10">
 			<div className="text-center md:text-left flex flex-col md:flex-row gap-y-5 gap-x-24 justify-between">
 				<div className="flex-1 space-y-5">
-					<p className="text-[#FF6F00] text-base font-semibold uppercase tracking-[.2em] font-sans">
+					<p className="text-[#FF6F00] font-semibold uppercase tracking-[.2em] font-sans">
 						Our Story
 					</p>
 					<h1 className="text-4xl md:text-5xl xl:text-6xl">

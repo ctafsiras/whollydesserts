@@ -21,7 +21,7 @@ const Navbar = () => {
 				isOpen={isDrawerOpen}
 				setIsOpen={() => setIsDrawerOpen(!isDrawerOpen)}
 			/>
-			<section className="flex justify-between items-center pt-5 px-5 md:pt-2 lg:px-2 lg:py-7 max-w-screen-md lg:max-w-full xl:max-w-screen-xl mx-auto border-b border-gray-100">
+			<section className="flex justify-between items-center py-5 px-5 md:pt-2 lg:px-2 lg:py-7 max-w-screen-md lg:max-w-full xl:max-w-screen-xl mx-auto border-b border-gray-100">
 				<div className="relative w-32 h-7 md:w-32">
 					<Image
 						src="/assets/images/logo.png"
@@ -31,7 +31,7 @@ const Navbar = () => {
 					/>
 				</div>
 				<nav className="hidden lg:block">
-					<ul className="flex gap-10">
+					<ul className="flex gap-10 font-sans">
 						<Link
 							href={"/"}
 							className={`nav-link ${

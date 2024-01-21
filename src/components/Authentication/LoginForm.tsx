@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
+import SocialLogin from "./SocialLogin";
 
 const LoginForm = () => {
 	const [isLoading, setIsLoading] = useState(false);
@@ -132,6 +133,7 @@ const LoginForm = () => {
 						</Link>
 					</div>
 				</form>
+				<SocialLogin />
 			</div>
 		</div>
 	);

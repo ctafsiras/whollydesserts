@@ -5,6 +5,7 @@ import type { Metadata } from "next";
 import { Abhaya_Libre } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
+import ToasterContext from "./context/ToasterContext";
 
 const abhayaLibre = Abhaya_Libre({
 	subsets: ["latin"],
@@ -29,6 +30,7 @@ export default function RootLayout({
 			<body>
 				<Providers>
 					<Navbar />
+					<ToasterContext />
 					{children}
 					<NewsLetter />
 					<Footer />

@@ -1,14 +1,16 @@
 "use client";
 
-import SignupIllustration from "@/../public/assets/images/signup-illustration.webp";
-import axios from "axios";
+import SigninIllustration from "@/../public/assets/images/signin-illustration.jpg";
+import { signIn } from "next-auth/react";
+
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 
-const RegisterForm = () => {
+const LoginForm = () => {
 	const [isLoading, setIsLoading] = useState(false);
 	const router = useRouter();
 	const {
@@ -17,61 +19,46 @@ const RegisterForm = () => {
 		formState: { errors },
 	} = useForm<FieldValues>({
 		defaultValues: {
-			name: "",
 			email: "",
 			password: "",
-			confirmPassword: "",
 		},
 	});
 
 	const onSubmit: SubmitHandler<FieldValues> = (data) => {
 		setIsLoading(true);
-		if (data.password !== data.confirmPassword) {
-			toast.error("Passwords do not match");
-			setIsLoading(false);
-			return;
-		}
 
-		axios
-			.post("/api/register", data)
-			.catch((err) => {
-				toast.error(err.response.data);
-			})
-			.finally(() => {
-				setIsLoading(false);
+		signIn("credentials", {
+			...data,
+			redirect: false,
+		}).then((callback) => {
+			if (callback?.error) {
+				toast.error(callback.error);
+			}
+			if (callback?.ok && !callback?.error) {
 				router.back();
-			});
+			}
+			setIsLoading(false);
+		});
 	};
 	return (
 		<div className="flex items-center flex-col md:flex-row px-10 font-sans">
+			<div className="flex-1 p-4 md:p-8 hidden md:block">
+				<Image
+					src={SigninIllustration}
+					alt="Waffles"
+					width={800}
+					height={600}
+					className="rounded-md object-cover"
+				/>
+			</div>
 			<div className="flex-1 p-4 md:p-8">
 				<h1 className="text-3xl font-bold text-gray-800 mb-4">
-					Create New Account
+					Login To Your Account
 				</h1>
 				<form
 					className="space-y-4"
 					onSubmit={handleSubmit(onSubmit)}
 				>
-					<div className="flex flex-col">
-						<label
-							htmlFor="name"
-							className="text-gray-600"
-						>
-							Name
-						</label>
-						<input
-							type="text"
-							id="name"
-							{...register("name", {
-								required: true,
-								maxLength: 30,
-							})}
-							disabled={isLoading}
-							className={`border border-gray-300 px-2 py-1 focus:outline-none ${
-								errors.name && "ring-2 ring-red-500"
-							}`}
-						/>
-					</div>
 					<div className="flex flex-col">
 						<label
 							htmlFor="email"
@@ -84,8 +71,6 @@ const RegisterForm = () => {
 							id="email"
 							{...register("email", {
 								required: true,
-								pattern:
-									/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
 							})}
 							disabled={isLoading}
 							className={`border border-gray-300 px-2 py-1 focus:outline-none ${
@@ -105,33 +90,10 @@ const RegisterForm = () => {
 							id="password"
 							{...register("password", {
 								required: true,
-								pattern:
-									/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z\d\s]).{8,}$/,
 							})}
 							disabled={isLoading}
 							className={`border border-gray-300 px-2 py-1 focus:outline-none ${
 								errors.password && "ring-2 ring-red-500"
-							}`}
-						/>
-					</div>
-					<div className="flex flex-col">
-						<label
-							htmlFor="confirmPassword"
-							className="text-gray-600"
-						>
-							Confirm Password
-						</label>
-						<input
-							type="password"
-							id="confirmPassword"
-							{...register("confirmPassword", {
-								required: true,
-								pattern:
-									/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z\d\s]).{8,}$/,
-							})}
-							disabled={isLoading}
-							className={`border border-gray-300 px-2 py-1 focus:outline-none ${
-								errors.confirmPassword && "ring-2 ring-red-500"
 							}`}
 						/>
 					</div>
@@ -143,31 +105,36 @@ const RegisterForm = () => {
 							`}
 							disabled={isLoading}
 						>
-							Register
+							Login
 						</button>
 						<span className="text-gray-600">
-							Already have an account?
+							Don&apos;t have an account?
 						</span>
 						<button
 							type="button"
 							className="text-gray-600 font-bold px-4 py-2 rounded-md hover:bg-gray-200 flex items-center"
 						>
-							Login
+							Register
 						</button>
 					</div>
+					<div className="flex justify-between">
+						<Link
+							href="/forgot-password"
+							className="text-gray-600 hover:text-gray-800"
+						>
+							Forgot Password?
+						</Link>
+						<Link
+							href="/help"
+							className="text-gray-600 hover:text-gray-800"
+						>
+							Get help
+						</Link>
+					</div>
 				</form>
-			</div>
-			<div className="flex-1 p-4 md:p-8 hidden md:block">
-				<Image
-					src={SignupIllustration}
-					alt="Waffles"
-					width={800}
-					height={600}
-					className="rounded-md object-cover"
-				/>
 			</div>
 		</div>
 	);
 };
 
-export default RegisterForm;
+export default LoginForm;

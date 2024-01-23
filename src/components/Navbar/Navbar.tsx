@@ -10,11 +10,13 @@ import { FaChevronDown } from "react-icons/fa";
 import "./Navbar.css";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { signOut, useSession } from "next-auth/react";
+import { IoMdLogOut } from "react-icons/io";
 
 const Navbar = () => {
 	const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 	const pathname = usePathname();
-
+	const { data: session, status } = useSession();
 	return (
 		<>
 			<Drawer
@@ -67,12 +69,29 @@ const Navbar = () => {
 						>
 							CONTACT
 						</Link>
+						{status === "unauthenticated" && (
+							<Link
+								href={"/authentication"}
+								className={`nav-link uppercase ${
+									pathname === "/authentication" &&
+									"active-link"
+								}`}
+							>
+								Register
+							</Link>
+						)}
 					</ul>
 				</nav>
 				<div className="flex gap-6">
 					<TbSearch className="cursor-pointer w-6 h-6 hover:text-[#FF6F00] transition duration-300" />
+					{status === "authenticated" && (
+						<IoMdLogOut
+							className="cursor-pointer w-6 h-6 hover:text-[#FF6F00] transition duration-300"
+							onClick={() => signOut()}
+						/>
+					)}
 					<RiMenu3Fill
-						className="cursor-pointer w-6 h-6 hover:text-[#FF6F00] transition duration-300"
+						className="cursor-pointer w-6 h-6 hover:text-[#FF6F00] transition duration-300 lg:hidden"
 						onClick={() => setIsDrawerOpen(true)}
 					/>
 				</div>

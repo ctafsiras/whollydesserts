@@ -7,8 +7,9 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
+import SocialLogin from "./SocialLogin";
 
-const RegisterForm = () => {
+const RegisterForm = ({ changeMethod }: { changeMethod: () => void }) => {
 	const [isLoading, setIsLoading] = useState(false);
 	const router = useRouter();
 	const {
@@ -151,11 +152,13 @@ const RegisterForm = () => {
 						<button
 							type="button"
 							className="text-gray-600 font-bold px-4 py-2 rounded-md hover:bg-gray-200 flex items-center"
+							onClick={changeMethod}
 						>
 							Login
 						</button>
 					</div>
 				</form>
+				<SocialLogin />
 			</div>
 			<div className="flex-1 p-4 md:p-8 hidden md:block">
 				<Image

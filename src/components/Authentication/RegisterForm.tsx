@@ -40,7 +40,6 @@ const RegisterForm = ({ changeMethod }: { changeMethod: () => void }) => {
 			})
 			.finally(() => {
 				setIsLoading(false);
-				router.back();
 			});
 	};
 	return (

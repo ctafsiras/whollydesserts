@@ -35,9 +35,7 @@ const LoginForm = ({ changeMethod }: { changeMethod: () => void }) => {
 			if (callback?.error) {
 				toast.error(callback.error);
 			}
-			if (callback?.ok && !callback?.error) {
-				router.back();
-			}
+
 			setIsLoading(false);
 		});
 	};

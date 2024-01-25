@@ -2,16 +2,23 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import { FaChevronDown } from "react-icons/fa";
 import { RiMenu3Fill } from "react-icons/ri";
 import { TbSearch } from "react-icons/tb";
 import Drawer from "../Drawer/Drawer";
-import { FaChevronDown } from "react-icons/fa";
 
-import "./Navbar.css";
+import {
+	Button,
+	Dropdown,
+	DropdownItem,
+	DropdownMenu,
+	DropdownTrigger,
+} from "@nextui-org/react";
+import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { signOut, useSession } from "next-auth/react";
 import { IoMdLogOut } from "react-icons/io";
+import "./Navbar.css";
 
 const Navbar = () => {
 	const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -59,7 +66,20 @@ const Navbar = () => {
 							MENU
 						</Link>
 						<li className="nav-link flex items-center gap-2">
-							PAGES <FaChevronDown />
+							<Dropdown>
+								<DropdownTrigger>
+									<Button variant="light">Open Menu</Button>
+								</DropdownTrigger>
+								<DropdownMenu aria-label="Static Actions">
+									<DropdownItem
+										key="dashboard"
+										href="/dashboard"
+									>
+										Dashboard
+									</DropdownItem>
+								</DropdownMenu>
+							</Dropdown>
+							<FaChevronDown />
 						</li>
 						<Link
 							href={"/contact"}

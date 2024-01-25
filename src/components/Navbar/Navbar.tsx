@@ -8,7 +8,6 @@ import { TbSearch } from "react-icons/tb";
 import Drawer from "../Drawer/Drawer";
 
 import {
-	Button,
 	Dropdown,
 	DropdownItem,
 	DropdownMenu,
@@ -23,7 +22,7 @@ import "./Navbar.css";
 const Navbar = () => {
 	const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 	const pathname = usePathname();
-	const { data: session, status } = useSession();
+	const { status } = useSession();
 	return (
 		<>
 			<Drawer
@@ -65,12 +64,18 @@ const Navbar = () => {
 						>
 							MENU
 						</Link>
-						<li className="nav-link flex items-center gap-2">
+						{status === "authenticated" && (
 							<Dropdown>
 								<DropdownTrigger>
-									<Button variant="light">Open Menu</Button>
+									<li className="nav-link flex items-center gap-2">
+										Open Menu
+										<FaChevronDown />
+									</li>
 								</DropdownTrigger>
-								<DropdownMenu aria-label="Static Actions">
+								<DropdownMenu
+									aria-label="Static Actions"
+									className="text-black"
+								>
 									<DropdownItem
 										key="dashboard"
 										href="/dashboard"
@@ -79,8 +84,7 @@ const Navbar = () => {
 									</DropdownItem>
 								</DropdownMenu>
 							</Dropdown>
-							<FaChevronDown />
-						</li>
+						)}
 						<Link
 							href={"/contact"}
 							className={`nav-link ${

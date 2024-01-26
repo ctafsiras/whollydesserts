@@ -1,32 +1,35 @@
 "use client";
 
+import { User } from "@prisma/client";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
-import getCurrentUser from "../hooks/getCurrentUser";
 
 export default function Dashboard() {
-	const { data: session } = useSession();
-	const userEmail = session?.user?.email;
-	const [user, setUser] = useState(null);
+  const { data: session } = useSession();
+  const userEmail = session?.user?.email;
+  const [user, setUser] = useState<User | null>(null);
 
-	useEffect(() => {
-		const fetchUser = async () => {
-			const currentUser = await getCurrentUser(userEmail);
-			setUser(currentUser);
-		};
+  useEffect(() => {
+    fetch(`api/user/${userEmail}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email: userEmail }),
+    })
+      .then((res) => res.json())
+      .then((data) => setUser(data.user));
+  }, [userEmail]);
 
-		fetchUser();
-	}, [userEmail]);
+  if (!user) {
+    return <p>Loading...</p>;
+  }
 
-	if (!user) {
-		return <p>Loading...</p>;
-	}
+  console.log(user);
 
-	console.log(user);
-
-	return (
-		<div>
-			<h1>Dashboard</h1>
-		</div>
-	);
+  return (
+    <div>
+      <h1>Dashboard {user.name}</h1>
+    </div>
+  );
 }

@@ -5,11 +5,13 @@ export async function GET(
   { params }: { params: { email: string } }
 ) {
   const email = params.email;
+  const data = await request.text();
   try {
     const user = await prisma.user.findUnique({
       where: { email },
     });
-    return Response.json({ user });
+    console.log(data);
+    return Response.json({ user, data });
   } catch (err) {
     console.error(err);
   }

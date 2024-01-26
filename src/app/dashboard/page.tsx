@@ -1,13 +1,28 @@
 "use client";
 
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import getCurrentUser from "../hooks/getCurrentUser";
 
 export default function Dashboard() {
-	const { status } = useSession();
-	const router = useRouter();
+	const { data: session } = useSession();
+	const userEmail = session?.user?.email;
+	const [user, setUser] = useState(null);
 
-	if (status === "unauthenticated") router.back();
+	useEffect(() => {
+		const fetchUser = async () => {
+			const currentUser = await getCurrentUser(userEmail);
+			setUser(currentUser);
+		};
+
+		fetchUser();
+	}, [userEmail]);
+
+	if (!user) {
+		return <p>Loading...</p>;
+	}
+
+	console.log(user);
 
 	return (
 		<div>

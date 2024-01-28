@@ -1,35 +1,36 @@
 "use client";
 
+import AdminDashboard from "@/components/Dashboard/Admin/AdminDashboard";
+import UserDashboard from "@/components/Dashboard/User/UserDashboard";
+import { Spinner } from "@nextui-org/react";
 import { User } from "@prisma/client";
+import axios from "axios";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 
 export default function Dashboard() {
-  const { data: session } = useSession();
-  const userEmail = session?.user?.email;
-  const [user, setUser] = useState<User | null>(null);
+	const { data: session } = useSession();
+	const [user, setUser] = useState<User>();
 
-  useEffect(() => {
-    fetch(`api/user/${userEmail}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email: userEmail }),
-    })
-      .then((res) => res.json())
-      .then((data) => setUser(data.user));
-  }, [userEmail]);
+	useEffect(() => {
+		const fetch = async () => {
+			axios.get(`/api/user?email=${session?.user?.email}`).then((res) => {
+				setUser(res.data);
+			});
+		};
+		fetch();
+	}, [session?.user?.email]);
 
-  if (!user) {
-    return <p>Loading...</p>;
-  }
+	if (!user) {
+		return (
+			<div className="flex items-center justify-center h-screen">
+				<Spinner
+					color="primary"
+					labelColor="foreground"
+				/>
+			</div>
+		);
+	}
 
-  console.log(user);
-
-  return (
-    <div>
-      <h1>Dashboard {user.name}</h1>
-    </div>
-  );
+	return <div>{user?.isAdmin ? <AdminDashboard /> : <UserDashboard />}</div>;
 }

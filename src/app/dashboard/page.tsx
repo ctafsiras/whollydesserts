@@ -1,6 +1,7 @@
 "use client";
 
 import AdminDashboard from "@/components/Dashboard/Admin/AdminDashboard";
+import Sidebar from "@/components/Dashboard/Sidebar/Sidebar";
 import UserDashboard from "@/components/Dashboard/User/UserDashboard";
 import { Spinner } from "@nextui-org/react";
 import { User } from "@prisma/client";
@@ -55,10 +56,11 @@ export default function Dashboard() {
 		return null;
 	} else {
 		return (
-			<div>
+			<main className="flex h-screen">
+				<Sidebar />
 				{user &&
 					(user.isAdmin ? <AdminDashboard /> : <UserDashboard />)}
-			</div>
+			</main>
 		);
 	}
 }

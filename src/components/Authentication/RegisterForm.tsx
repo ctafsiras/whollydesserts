@@ -2,6 +2,7 @@
 
 import SignupIllustration from "@/../public/assets/images/signup-illustration.webp";
 import axios from "axios";
+import { signIn } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -35,6 +36,12 @@ const RegisterForm = ({ changeMethod }: { changeMethod: () => void }) => {
 
 		axios
 			.post("/api/register", data)
+			.then(() => {
+				signIn("credentials", {
+					...data,
+					redirect: false,
+				});
+			})
 			.catch((err) => {
 				toast.error(err.response.data);
 			})

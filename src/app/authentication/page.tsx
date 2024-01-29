@@ -1,7 +1,7 @@
 "use client";
 
 import LoginForm from "@/components/Authentication/LoginForm";
-import RegisterForm from "@/components/Authentication/RegisterForm";
+import AddItemForm from "@/components/Authentication/RegisterForm";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -20,7 +20,7 @@ export default function Auth() {
 			{authMethod === "login" ? (
 				<LoginForm changeMethod={() => setAuthMethod("register")} />
 			) : (
-				<RegisterForm changeMethod={() => setAuthMethod("login")} />
+				<AddItemForm changeMethod={() => setAuthMethod("login")} />
 			)}
 		</main>
 	);

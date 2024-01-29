@@ -56,11 +56,10 @@ export default function Dashboard() {
 		return null;
 	} else {
 		return (
-			<main className="flex h-screen">
-				<Sidebar />
+			<section>
 				{user &&
 					(user.isAdmin ? <AdminDashboard /> : <UserDashboard />)}
-			</main>
+			</section>
 		);
 	}
 }

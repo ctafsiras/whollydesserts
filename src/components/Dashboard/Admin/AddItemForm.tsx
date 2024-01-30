@@ -3,6 +3,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
 
 const AddItemForm = () => {
 	const [isLoading, setIsLoading] = useState(false);
@@ -22,10 +23,16 @@ const AddItemForm = () => {
 	const onSubmit: SubmitHandler<FieldValues> = (data) => {
 		setIsLoading(true);
 
-		axios.post("/api/addItem", data).then((res) => {
-			console.log(res);
-			setIsLoading(false);
-		});
+		axios
+			.post("/api/products", data)
+			.then((res) => {
+				toast.success("Product added successfully");
+				setIsLoading(false);
+			})
+			.catch((err) => {
+				toast.error(err.response.data);
+				setIsLoading(false);
+			});
 	};
 	return (
 		<form

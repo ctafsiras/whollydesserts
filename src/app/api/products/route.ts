@@ -10,6 +10,11 @@ export async function POST(req: NextRequest) {
 		},
 	});
 
-	console.log(data);
 	return Response.json(product);
+}
+
+export async function GET() {
+	const products = await prisma.product.findMany();
+
+	return Response.json(products);
 }

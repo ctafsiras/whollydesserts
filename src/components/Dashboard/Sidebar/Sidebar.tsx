@@ -12,13 +12,28 @@ const Sidebar = () => {
 			/>
 			<ul className="mt-10 text-xl font-sans uppercase list-inside list-disc">
 				<li>
-					<Link href="/dashboard/additem">Add Item</Link>
+					<Link
+						href="/dashboard/additem"
+						className="bg-gradient-to-r from-white to-white bg-[length:0%_2px] hover:bg-[length:100%_2px] bg-no-repeat bg-left-bottom transition-[background-size] duration-300 ease-in-out"
+					>
+						Add Item
+					</Link>
 				</li>
 				<li>
-					<Link href="#">Items</Link>
+					<Link
+						href="/dashboard/items"
+						className="bg-gradient-to-r from-white to-white bg-[length:0%_2px] hover:bg-[length:100%_2px] bg-no-repeat bg-left-bottom transition-[background-size] duration-300 ease-in-out"
+					>
+						All Items
+					</Link>
 				</li>
 				<li>
-					<Link href="#">Users</Link>
+					<Link
+						href="#"
+						className="bg-gradient-to-r from-white to-white bg-[length:0%_2px] hover:bg-[length:100%_2px] bg-no-repeat bg-left-bottom transition-[background-size] duration-300 ease-in-out"
+					>
+						Users
+					</Link>
 				</li>
 			</ul>
 

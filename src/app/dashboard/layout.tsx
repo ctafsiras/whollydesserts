@@ -1,4 +1,9 @@
 import Sidebar from "@/components/Dashboard/Sidebar/Sidebar";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+	title: "Dashboard - Wholly Desserts",
+};
 
 export default function DashboardLayout({
 	children,
@@ -11,7 +16,7 @@ export default function DashboardLayout({
 				<Sidebar />
 			</section>
 
-			<section className="w-10/12 px-20">{children}</section>
+			<section className="w-10/12">{children}</section>
 		</main>
 	);
 }

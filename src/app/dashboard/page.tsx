@@ -1,7 +1,6 @@
 "use client";
 
 import AdminDashboard from "@/components/Dashboard/Admin/AdminDashboard";
-import Sidebar from "@/components/Dashboard/Sidebar/Sidebar";
 import UserDashboard from "@/components/Dashboard/User/UserDashboard";
 import { Spinner } from "@nextui-org/react";
 import { User } from "@prisma/client";
@@ -43,23 +42,20 @@ export default function Dashboard() {
 		}
 	}, [userEmail, status, router]);
 
-	if (status === "loading") {
-		return (
-			<div className="flex items-center justify-center h-screen">
-				<Spinner
-					color="primary"
-					labelColor="foreground"
-				/>
-			</div>
-		);
-	} else if (status === "unauthenticated") {
-		return null;
-	} else {
-		return (
-			<section>
-				{user &&
-					(user.isAdmin ? <AdminDashboard /> : <UserDashboard />)}
-			</section>
-		);
-	}
+	return (
+		<section>
+			{user.role === "admin" && <AdminDashboard />}
+			{user.role === "user" && <UserDashboard />}
+			{(status === "loading" ||
+				status === "unauthenticated" ||
+				user.role === undefined) && (
+				<div className="flex items-center justify-center h-screen">
+					<Spinner
+						color="primary"
+						labelColor="foreground"
+					/>
+				</div>
+			)}
+		</section>
+	);
 }

@@ -29,7 +29,7 @@ const Sidebar = () => {
 				</li>
 				<li>
 					<Link
-						href="#"
+						href="/dashboard/users"
 						className="bg-gradient-to-r from-white to-white bg-[length:0%_2px] hover:bg-[length:100%_2px] bg-no-repeat bg-left-bottom transition-[background-size] duration-300 ease-in-out"
 					>
 						Users

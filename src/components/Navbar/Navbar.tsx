@@ -67,8 +67,8 @@ const Navbar = () => {
 						{status === "authenticated" && (
 							<Dropdown>
 								<DropdownTrigger>
-									<li className="nav-link flex items-center gap-2">
-										Open Menu
+									<li className="nav-link flex items-center gap-2 uppercase">
+										Pages
 										<FaChevronDown />
 									</li>
 								</DropdownTrigger>

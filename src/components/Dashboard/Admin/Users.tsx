@@ -1,6 +1,6 @@
 "use client";
 
-import { columns, roleOptions, users } from "@/app/utils/data";
+import { columns, roleOptions } from "@/app/utils/data";
 import {
 	Button,
 	Chip,
@@ -21,7 +21,9 @@ import {
 	TableRow,
 	User,
 } from "@nextui-org/react";
-import React from "react";
+import { User as UserType } from "@prisma/client";
+import axios from "axios";
+import React, { useEffect } from "react";
 import { CiSearch } from "react-icons/ci";
 import { FaChevronDown } from "react-icons/fa";
 import { FaEllipsisVertical } from "react-icons/fa6";
@@ -32,8 +34,6 @@ const roleColorMap: Record<string, ChipProps["color"]> = {
 };
 
 const INITIAL_VISIBLE_COLUMNS = ["name", "email", "role", "actions"];
-
-type User = (typeof users)[0];
 
 const Users = () => {
 	const [filterValue, setFilterValue] = React.useState("");
@@ -49,8 +49,15 @@ const Users = () => {
 		column: "age",
 		direction: "ascending",
 	});
-
 	const [page, setPage] = React.useState(1);
+	const [users, setUsers] = React.useState<UserType[]>([]);
+
+	// Fetch users
+	useEffect(() => {
+		axios.get("/api/users").then((data) => {
+			setUsers(data.data);
+		});
+	}, []);
 
 	const hasSearchFilter = Boolean(filterValue);
 
@@ -80,7 +87,7 @@ const Users = () => {
 		}
 
 		return filteredUsers;
-	}, [filterValue, roleFilter, hasSearchFilter]);
+	}, [filterValue, roleFilter, hasSearchFilter, users]);
 
 	const capitalize = (str: string) => {
 		return str.charAt(0).toUpperCase() + str.slice(1);
@@ -94,72 +101,73 @@ const Users = () => {
 
 		return filteredItems.slice(start, end);
 	}, [page, filteredItems, rowsPerPage]);
-
 	const sortedItems = React.useMemo(() => {
-		return [...items].sort((a: User, b: User) => {
-			const first = a[sortDescriptor.column as keyof User] as number;
-			const second = b[sortDescriptor.column as keyof User] as number;
+		return [...items].sort((a: UserType, b: UserType) => {
+			const first = a[sortDescriptor.column as keyof UserType] as string;
+			const second = b[sortDescriptor.column as keyof UserType] as string;
 			const cmp = first < second ? -1 : first > second ? 1 : 0;
 
 			return sortDescriptor.direction === "descending" ? -cmp : cmp;
 		});
 	}, [sortDescriptor, items]);
 
-	const renderCell = React.useCallback((user: User, columnKey: React.Key) => {
-		const cellValue = user[columnKey as keyof User];
+	const renderCell = React.useCallback(
+		(user: UserType, columnKey: React.Key) => {
+			const cellValue = user[columnKey as keyof UserType];
 
-		switch (columnKey) {
-			case "name":
-				return (
-					<User
-						avatarProps={{ radius: "lg", src: user.image }}
-						description={user.email}
-						name={cellValue}
-					></User>
-				);
-			case "role":
-				return (
-					<Chip
-						className="capitalize"
-						color={roleColorMap[user.role]}
-						size="sm"
-						variant="flat"
-					>
-						{cellValue}
-					</Chip>
-				);
-			case "actions":
-				return (
-					<div className="flex justify-center items-center gap-2">
-						<Dropdown>
-							<DropdownTrigger>
-								<Button
-									isIconOnly
-									size="md"
-									variant="ghost"
-								>
-									<FaEllipsisVertical className="text-black" />
-								</Button>
-							</DropdownTrigger>
-							<DropdownMenu>
-								<DropdownItem color="primary">
-									View
-								</DropdownItem>
-								<DropdownItem color="warning">
-									Edit
-								</DropdownItem>
-								<DropdownItem color="danger">
-									Delete
-								</DropdownItem>
-							</DropdownMenu>
-						</Dropdown>
-					</div>
-				);
-			default:
-				return cellValue;
-		}
-	}, []);
-
+			switch (columnKey) {
+				case "name":
+					return (
+						<User
+							avatarProps={{ radius: "lg", src: user.image }}
+							description={user.email}
+							name={capitalize(user.name)}
+						></User>
+					);
+				case "role":
+					return (
+						<Chip
+							className="capitalize"
+							color={roleColorMap[user.role]}
+							size="sm"
+							variant="flat"
+						>
+							{capitalize(user.role)}
+						</Chip>
+					);
+				case "actions":
+					return (
+						<div className="flex justify-center items-center gap-2">
+							<Dropdown>
+								<DropdownTrigger>
+									<Button
+										isIconOnly
+										size="md"
+										variant="ghost"
+									>
+										<FaEllipsisVertical className="text-black" />
+									</Button>
+								</DropdownTrigger>
+								<DropdownMenu>
+									<DropdownItem color="primary">
+										View
+									</DropdownItem>
+									<DropdownItem color="warning">
+										Edit
+									</DropdownItem>
+									<DropdownItem color="danger">
+										Delete
+									</DropdownItem>
+								</DropdownMenu>
+							</Dropdown>
+						</div>
+					);
+				default:
+					return cellValue;
+			}
+		},
+		[]
+	);
 	const onRowsPerPageChange = React.useCallback(
 		(e: React.ChangeEvent<HTMLSelectElement>) => {
 			setRowsPerPage(Number(e.target.value));
@@ -167,7 +175,6 @@ const Users = () => {
 		},
 		[]
 	);
-
 	const onSearchChange = React.useCallback((value?: string) => {
 		if (value) {
 			setFilterValue(value);
@@ -176,7 +183,6 @@ const Users = () => {
 			setFilterValue("");
 		}
 	}, []);
-
 	const onClear = React.useCallback(() => {
 		setFilterValue("");
 		setPage(1);
@@ -281,8 +287,8 @@ const Users = () => {
 		onSearchChange,
 		onRowsPerPageChange,
 		onClear,
+		users.length,
 	]);
-
 	const bottomContent = React.useMemo(() => {
 		return (
 			<div className="py-2 px-2 flex justify-between items-center">

@@ -163,6 +163,10 @@ const Users = () => {
 						</div>
 					);
 				default:
+					if (cellValue instanceof Date) {
+						return cellValue.toLocaleString();
+					}
+
 					return cellValue;
 			}
 		},

@@ -1,4 +1,9 @@
+"use client";
+
+import { usePathname } from "next/navigation";
+
 const NewsLetter = () => {
+	const pathname = usePathname();
 	return (
 		<section
 			style={{
@@ -9,7 +14,13 @@ const NewsLetter = () => {
 				backgroundRepeat: "no-repeat",
 				backgroundBlendMode: "multiply",
 			}}
-			className="text-center py-20 lg:py-28 px-6"
+			className={`text-center py-20 lg:py-28 px-6 ${
+				(pathname === "/dashboard" ||
+					pathname === "/dashboard/items" ||
+					pathname === "/dashboard/additem" ||
+					pathname === "/dashboard/users") &&
+				"hidden"
+			}`}
 		>
 			<div className="md:w-3/4 lg:w-1/2 mx-auto text-white">
 				<h3 className="text-lg tracking-[.2em] mb-6">NEWSLETTER</h3>

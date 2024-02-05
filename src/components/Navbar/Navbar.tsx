@@ -15,7 +15,7 @@ import {
 } from "@nextui-org/react";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { IoMdLogOut } from "react-icons/io";
 import "./Navbar.css";
 
@@ -23,13 +23,22 @@ const Navbar = () => {
 	const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 	const pathname = usePathname();
 	const { status } = useSession();
+	const router = useRouter();
 	return (
 		<>
 			<Drawer
 				isOpen={isDrawerOpen}
 				setIsOpen={() => setIsDrawerOpen(!isDrawerOpen)}
 			/>
-			<section className="flex justify-between items-center py-5 px-5 md:pt-2 lg:px-2 lg:py-7 max-w-screen-md lg:max-w-full xl:max-w-screen-xl mx-auto border-b border-gray-100">
+			<section
+				className={`flex justify-between items-center py-5 px-5 md:pt-2 lg:px-2 lg:py-7 max-w-screen-md lg:max-w-full xl:max-w-screen-xl mx-auto border-b border-gray-100 ${
+					(pathname === "/dashboard" ||
+						pathname === "/dashboard/items" ||
+						pathname === "/dashboard/additem" ||
+						pathname === "/dashboard/users") &&
+					"hidden"
+				}`}
+			>
 				<div className="relative w-32 h-7 md:w-32">
 					<Image
 						src="/assets/images/logo.png"
@@ -74,11 +83,13 @@ const Navbar = () => {
 								</DropdownTrigger>
 								<DropdownMenu
 									aria-label="Static Actions"
-									className="text-black"
+									className="text-black font-sans"
 								>
 									<DropdownItem
 										key="dashboard"
-										href="/dashboard"
+										onClick={() =>
+											router.push("/dashboard")
+										}
 									>
 										Dashboard
 									</DropdownItem>
@@ -93,22 +104,23 @@ const Navbar = () => {
 						>
 							CONTACT
 						</Link>
-						{status === "unauthenticated" && (
-							<Link
-								href={"/authentication"}
-								className={`nav-link uppercase ${
-									pathname === "/authentication" &&
-									"active-link"
-								}`}
-							>
-								Register
-							</Link>
-						)}
+						{status !== "loading" &&
+							status === "unauthenticated" && (
+								<Link
+									href={"/authentication"}
+									className={`nav-link uppercase ${
+										pathname === "/authentication" &&
+										"active-link"
+									}`}
+								>
+									Register
+								</Link>
+							)}
 					</ul>
 				</nav>
 				<div className="flex gap-6">
 					<TbSearch className="cursor-pointer w-6 h-6 hover:text-[#FF6F00] transition duration-300" />
-					{status === "authenticated" && (
+					{status !== "loading" && status === "authenticated" && (
 						<IoMdLogOut
 							className="cursor-pointer w-6 h-6 hover:text-[#FF6F00] transition duration-300"
 							onClick={() => signOut()}

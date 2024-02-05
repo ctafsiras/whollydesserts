@@ -45,7 +45,7 @@ export default function Dashboard() {
 	return (
 		<section>
 			{user.role === "admin" && <AdminDashboard />}
-			{user.role === "user" && <UserDashboard />}
+			{user.role === "user" && <UserDashboard user={user} />}
 			{(status === "loading" ||
 				status === "unauthenticated" ||
 				user.role === undefined) && (

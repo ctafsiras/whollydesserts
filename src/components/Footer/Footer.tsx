@@ -1,8 +1,20 @@
+"use client";
+
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 const Footer = () => {
+	const pathname = usePathname();
 	return (
-		<footer className="bg-[#29292A] text-white px-5 py-6 pt-20">
+		<footer
+			className={`bg-[#29292A] text-white px-5 py-6 pt-20 ${
+				(pathname === "/dashboard" ||
+					pathname === "/dashboard/items" ||
+					pathname === "/dashboard/additem" ||
+					pathname === "/dashboard/users") &&
+				"hidden"
+			}`}
+		>
 			<section className="grid gap-y-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 justify-between items-start">
 				<div className="flex flex-col space-y-3 text-center sm:text-left relative">
 					<div className="mx-auto sm:mx-0">

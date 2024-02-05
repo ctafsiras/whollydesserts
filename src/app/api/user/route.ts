@@ -21,3 +21,18 @@ export async function GET(request: NextRequest) {
 		console.error(err);
 	}
 }
+export async function PUT(request: NextRequest) {
+	const data = await request.json();
+	const { id, ...updatedData } = data;
+
+	const updatedUser = await prisma.user.update({
+		where: {
+			id: id,
+		},
+		data: {
+			...updatedData,
+		},
+	});
+
+	return Response.json({ ...updatedUser });
+}

@@ -1,18 +1,17 @@
+import { Image } from "@nextui-org/react";
 import { Product } from "@prisma/client";
-import Image from "next/image";
 
 const ProductCard = ({ product }: { product: Product }) => {
 	return (
 		<div
 			key={product.id}
-			className="w-96 rounded-xl bg-white bg-clip-border text-gray-700 shadow-xl"
+			className="rounded-xl bg-white bg-clip-border text-gray-700 shadow-xl"
 		>
 			<div className="relative mt-4 h-48 overflow-hidden rounded-t-xl">
 				<Image
 					src={product.image}
 					alt={product.name}
-					fill
-					className="h-full w-full object-cover"
+					width={"100%"}
 				/>
 			</div>
 			<div className="p-6">

@@ -1,6 +1,8 @@
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
+import { FaChevronDown } from "react-icons/fa";
 
 const Drawer = ({
 	isOpen,
@@ -14,13 +16,13 @@ const Drawer = ({
 		<main
 			className={`block lg:hidden fixed overflow-hidden z-10 bg-gray-900 bg-opacity-25 inset-0 transform ease-in-out ${
 				isOpen
-					? "transition-opacity opacity-100 duration-500 translate-x-0 "
-					: "transition-all delay-500 opacity-0 translate-x-full"
+					? "transition-opacity opacity-100 duration-500 -translate-x-0 "
+					: "transition-all delay-200 opacity-0 -translate-x-full"
 			}`}
 		>
 			<section
-				className={`w-11/12 left-0 absolute bg-white h-full delay-400 duration-500 ease-in-out transition-all transform ${
-					isOpen ? " translate-x-0 " : " translate-x-full "
+				className={`w-11/12 left-0 absolute bg-white h-full duration-500 ease-in-out transition-all transform ${
+					isOpen ? "delay-500 -translate-x-0" : "-translate-x-full"
 				}`}
 			>
 				<header className="p-4 flex items-center justify-between">
@@ -36,33 +38,51 @@ const Drawer = ({
 						onClick={setIsOpen}
 					/>
 				</header>
-				<ul className="pl-8 pt-10 space-y-4">
-					<li className="nav-link">HOME</li>
-					<li className="nav-link">ABOUT</li>
-					<li className="nav-link">MENU</li>
+				<ul className="pl-8 pt-10 flex flex-col space-y-4 font-sans uppercase">
+					<Link
+						href="/"
+						className="nav-link"
+					>
+						Home
+					</Link>
+					<Link
+						href="/about"
+						className="nav-link"
+					>
+						About
+					</Link>
+					<Link
+						href="/menu"
+						className="nav-link"
+					>
+						Menu
+					</Link>
 					<li>
 						<span
-							className="nav-link"
+							className="nav-link flex items-center gap-2"
 							onClick={() => setIsDropdownOpen(!isDropdownOpen)}
 						>
-							PAGES V
+							Pages <FaChevronDown size={20} />
 						</span>
 						<ul
 							className={`${
 								isDropdownOpen ? "block" : "hidden"
 							} pl-5 space-y-4 mt-4`}
 						>
-							<li className="nav-link">KITCHEN</li>
-							<li className="nav-link">REVIEWS</li>
-							<li className="nav-link">SERVICES</li>
-							<li className="nav-link">TEAM</li>
-							<li className="nav-link">FAQS</li>
-							<li className="nav-link">BLOG</li>
-							<li className="nav-link">SINGLE POST</li>
-							<li className="nav-link">404 PAGE</li>
+							<Link
+								href="/dashboard"
+								className="nav-link"
+							>
+								Dashboard
+							</Link>
 						</ul>
 					</li>
-					<li className="nav-link">CONTACT</li>
+					<Link
+						href="/contact"
+						className="nav-link"
+					>
+						Contact
+					</Link>
 				</ul>
 			</section>
 		</main>

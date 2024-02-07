@@ -55,6 +55,9 @@ const Sidebar = () => {
 					<Link href="/about">About</Link>
 				</li>
 				<li>
+					<Link href="/menu">Menu</Link>
+				</li>
+				<li>
 					<Link href="/contact">Contact</Link>
 				</li>
 			</ul>

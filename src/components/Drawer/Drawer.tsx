@@ -1,3 +1,6 @@
+"use client";
+
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -12,6 +15,7 @@ const Drawer = ({
 	setIsOpen: () => void;
 }) => {
 	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+	const { status } = useSession();
 	return (
 		<main
 			className={`block lg:hidden fixed overflow-hidden z-10 bg-gray-900 bg-opacity-25 inset-0 transform ease-in-out ${
@@ -42,47 +46,65 @@ const Drawer = ({
 					<Link
 						href="/"
 						className="nav-link"
+						onClick={setIsOpen}
 					>
 						Home
 					</Link>
 					<Link
 						href="/about"
 						className="nav-link"
+						onClick={setIsOpen}
 					>
 						About
 					</Link>
 					<Link
 						href="/menu"
 						className="nav-link"
+						onClick={setIsOpen}
 					>
 						Menu
 					</Link>
-					<li>
-						<span
-							className="nav-link flex items-center gap-2"
-							onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-						>
-							Pages <FaChevronDown size={20} />
-						</span>
-						<ul
-							className={`${
-								isDropdownOpen ? "block" : "hidden"
-							} pl-5 space-y-4 mt-4`}
-						>
-							<Link
-								href="/dashboard"
-								className="nav-link"
+					{status === "authenticated" && (
+						<li>
+							<span
+								className="nav-link flex items-center gap-2"
+								onClick={() =>
+									setIsDropdownOpen(!isDropdownOpen)
+								}
 							>
-								Dashboard
-							</Link>
-						</ul>
-					</li>
+								Pages <FaChevronDown size={20} />
+							</span>
+							<ul
+								className={`${
+									isDropdownOpen ? "block" : "hidden"
+								} pl-5 space-y-4 mt-4`}
+							>
+								<Link
+									href="/dashboard"
+									className="nav-link"
+									onClick={setIsOpen}
+								>
+									Dashboard
+								</Link>
+							</ul>
+						</li>
+					)}
 					<Link
 						href="/contact"
 						className="nav-link"
+						onClick={setIsOpen}
 					>
 						Contact
 					</Link>
+					{status === "unauthenticated" && (
+						<Link
+							href="/authentication"
+							className="nav-link"
+							onClick={setIsOpen}
+						>
+							Login
+						</Link>
+					)}
 				</ul>
 			</section>
 		</main>

@@ -3,12 +3,12 @@ import Image from "next/image";
 
 const MenuHero = () => {
 	return (
-		<section className="flex gap-x-24 items-center justify-around py-8 mx-14 font-sans">
-			<div className="flex-[2] mr-10">
+		<section className="flex flex-col lg:flex-row gap-x-24 gap-y-7 items-center justify-around py-8 lg:mx-14 mx-2 font-sans">
+			<div className="lg:w-1/2 w-full space-y-5 text-center lg:text-left">
 				<h1 className="text-4xl font-bold text-gray-800">
 					Fresh & Healthy Organic Food
 				</h1>
-				<p className="text-gray-600 mt-4">
+				<p className="text-gray-600 tex">
 					Lorem ipsum dolor sit amet consectetur adipiscing elit sed
 					do eiusmod tempor incididunt ut labore et dolore magna
 					aliqua. Ut enim ad minim veniam quis nostrud exercitation
@@ -18,8 +18,8 @@ const MenuHero = () => {
 					occaecat cupidatat non proident sunt in culpa qui officia
 					deserunt mollit anim id est laborum.
 				</p>
-				<div className="mt-6">
-					<button className="bg-green-500 text-white px-4 py-2 rounded mr-4">
+				<div className="space-x-7">
+					<button className="bg-green-500 text-white px-4 py-2 rounded">
 						Learn More
 					</button>
 					<button className="bg-gray-200 text-gray-800 px-4 py-2 rounded">
@@ -27,7 +27,7 @@ const MenuHero = () => {
 					</button>
 				</div>
 			</div>
-			<div className="flex-1">
+			<div className="lg:w-1/2 w-full">
 				<Image
 					src={DishImage}
 					alt="Dish"

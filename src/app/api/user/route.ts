@@ -14,6 +14,10 @@ export async function GET(request: NextRequest) {
 			where: {
 				email,
 			},
+			include: {
+				cart: true,
+				shippingAddresses: true,
+			},
 		});
 
 		return Response.json({ ...user });

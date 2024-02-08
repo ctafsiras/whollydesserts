@@ -48,6 +48,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 				>
 					<p className="my-2 text-center">
 						{product.description.split(" ").slice(0, 15).join(" ")}
+						...
 					</p>
 				</Tooltip>
 			</CardBody>

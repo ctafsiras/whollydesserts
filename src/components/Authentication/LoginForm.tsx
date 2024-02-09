@@ -5,7 +5,6 @@ import { signIn } from "next-auth/react";
 
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
@@ -13,7 +12,6 @@ import SocialLogin from "./SocialLogin";
 
 const LoginForm = ({ changeMethod }: { changeMethod: () => void }) => {
 	const [isLoading, setIsLoading] = useState(false);
-	const router = useRouter();
 	const {
 		register,
 		handleSubmit,

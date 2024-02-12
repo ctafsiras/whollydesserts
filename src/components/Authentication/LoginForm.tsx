@@ -3,15 +3,19 @@
 import SigninIllustration from "@/../public/assets/images/signin-illustration.jpg";
 import { signIn } from "next-auth/react";
 
-import { Button } from "@nextui-org/react";
+import { Button, Input } from "@nextui-org/react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
+import { IoEye, IoEyeOff } from "react-icons/io5";
 import SocialLogin from "./SocialLogin";
 
 const LoginForm = ({ changeMethod }: { changeMethod: () => void }) => {
 	const [isLoading, setIsLoading] = useState(false);
+	const [isVisible, setIsVisible] = useState(false);
+	const router = useRouter();
 	const {
 		register,
 		handleSubmit,
@@ -29,17 +33,20 @@ const LoginForm = ({ changeMethod }: { changeMethod: () => void }) => {
 		signIn("credentials", {
 			...data,
 			redirect: false,
-		}).then((callback) => {
-			if (callback?.error) {
-				toast.error(callback.error);
-			}
-
-			setIsLoading(false);
-		});
+		})
+			.then((callback) => {
+				if (callback?.error) {
+					toast.error(callback.error);
+				}
+				if (callback?.ok && !callback?.error) {
+					router.back();
+				}
+			})
+			.finally(() => setIsLoading(false));
 	};
 	return (
-		<div className="flex items-center flex-col md:flex-row px-10 font-sans">
-			<div className="flex-1 p-4 md:p-8 hidden md:block">
+		<div className="flex items-center flex-col md:flex-row md:px-10 font-sans">
+			<div className="md:w-1/2 w-full p-4 md:p-8 hidden md:block">
 				<Image
 					src={SigninIllustration}
 					alt="Waffles"
@@ -48,52 +55,52 @@ const LoginForm = ({ changeMethod }: { changeMethod: () => void }) => {
 					className="rounded-md object-cover"
 				/>
 			</div>
-			<div className="flex-1 p-4 md:p-8">
-				<h1 className="text-3xl font-bold text-gray-800 mb-4">
+			<div className="md:w-1/2 w-full p-4 md:p-8">
+				<h1 className="text-3xl text-center md:text-left font-bold text-gray-800 mb-4">
 					Login To Your Account
 				</h1>
 				<form
 					className="space-y-4"
 					onSubmit={handleSubmit(onSubmit)}
 				>
-					<div className="flex flex-col">
-						<label
-							htmlFor="email"
-							className="text-gray-600"
-						>
-							Email
-						</label>
-						<input
-							type="email"
-							id="email"
-							{...register("email", {
-								required: true,
-							})}
-							disabled={isLoading}
-							className={`border border-gray-300 px-2 py-1 focus:outline-none ${
-								errors.email && "ring-2 ring-red-500"
-							}`}
-						/>
-					</div>
-					<div className="flex flex-col">
-						<label
-							htmlFor="password"
-							className="text-gray-600"
-						>
-							Password
-						</label>
-						<input
-							type="password"
-							id="password"
-							{...register("password", {
-								required: true,
-							})}
-							disabled={isLoading}
-							className={`border border-gray-300 px-2 py-1 focus:outline-none ${
-								errors.password && "ring-2 ring-red-500"
-							}`}
-						/>
-					</div>
+					<Input
+						type="email"
+						{...register("email", {
+							required: true,
+						})}
+						required
+						label="Email"
+						disabled={isLoading}
+						variant="underlined"
+						color={errors.email ? "danger" : "default"}
+						errorMessage={
+							errors.email && "Please enter a valid email"
+						}
+					/>
+					<Input
+						type={isVisible ? "text" : "password"}
+						{...register("password", {
+							required: true,
+						})}
+						endContent={
+							<button
+								className="focus:outline-none"
+								type="button"
+								onClick={() => setIsVisible(!isVisible)}
+							>
+								{isVisible ? (
+									<IoEyeOff className="text-2xl text-default-400 pointer-events-none" />
+								) : (
+									<IoEye className="text-2xl text-default-400 pointer-events-none" />
+								)}
+							</button>
+						}
+						required
+						label="Password"
+						disabled={isLoading}
+						variant="underlined"
+						color={errors.password ? "danger" : "default"}
+					/>
 					<div className="flex items-center justify-between space-x-2">
 						<Button
 							type="submit"
@@ -120,9 +127,6 @@ const LoginForm = ({ changeMethod }: { changeMethod: () => void }) => {
 					<div className="flex justify-between">
 						<button className="text-gray-600 hover:text-gray-800">
 							Forgot Password?
-						</button>
-						<button className="text-gray-600 hover:text-gray-800">
-							Get help
 						</button>
 					</div>
 				</form>

@@ -20,12 +20,6 @@ export const options: NextAuthOptions = {
 				if (!credentials?.email && !credentials?.password) {
 					throw new Error("Email & Password is required");
 				}
-				if (!credentials?.email) {
-					throw new Error("Email is required");
-				}
-				if (!credentials?.password) {
-					throw new Error("Password is required");
-				}
 
 				const user = await prisma.user.findUnique({
 					where: {

@@ -1,3 +1,4 @@
+import { Button } from "@nextui-org/react";
 import { signIn } from "next-auth/react";
 import { toast } from "react-hot-toast";
 import { FaFacebook, FaGoogle } from "react-icons/fa";
@@ -20,27 +21,39 @@ const SocialLogin = () => {
 		// .finally(() => setIsLoading(false));
 	};
 	return (
-		<div className="text-center">
-			<hr className="my-5 bg-gray-black" />
-			<div className="flex items-center justify-between">
-				<button
-					className="flex items-center gap-2 bg-orange-500 px-6 py-2 rounded-sm hover:bg-orange-600 text-xl text-white"
+		<div>
+			<hr className="my-5 bg-black" />
+			<div className="flex flex-col md:flex-row items-center justify-between">
+				<Button
+					className="w-60 md:w-auto px-6 py-2 text-xl"
 					onClick={() => socialLogin("google")}
+					startContent={<FaGoogle />}
+					radius="sm"
+					color="warning"
+					variant="ghost"
 				>
-					<FaGoogle /> Google
-				</button>
-				<button
-					className="flex items-center gap-2 bg-orange-500 px-6 py-2 rounded-sm hover:bg-orange-600 text-xl text-white"
+					Google
+				</Button>
+				<Button
+					className="w-60 md:w-auto my-3 px-6 py-2 text-xl"
 					onClick={() => socialLogin("facebook")}
+					startContent={<FaFacebook />}
+					radius="sm"
+					color="warning"
+					variant="ghost"
 				>
-					<FaFacebook /> Facebook
-				</button>
-				<button
-					className="flex items-center gap-2 bg-orange-500 px-6 py-2 rounded-sm hover:bg-orange-600 text-xl text-white"
+					Facebook
+				</Button>
+				<Button
+					className="w-60 md:w-auto px-6 py-2 text-xl"
 					onClick={() => socialLogin("instagram")}
+					startContent={<RiInstagramFill />}
+					radius="sm"
+					color="warning"
+					variant="ghost"
 				>
-					<RiInstagramFill /> Instagram
-				</button>
+					Instagram
+				</Button>
 			</div>
 		</div>
 	);

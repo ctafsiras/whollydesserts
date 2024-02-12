@@ -113,7 +113,7 @@ const Navbar = () => {
 									"active-link"
 								}`}
 							>
-								Register
+								Login
 							</Link>
 						)}
 					</ul>

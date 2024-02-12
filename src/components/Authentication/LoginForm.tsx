@@ -3,8 +3,8 @@
 import SigninIllustration from "@/../public/assets/images/signin-illustration.jpg";
 import { signIn } from "next-auth/react";
 
+import { Button } from "@nextui-org/react";
 import Image from "next/image";
-import Link from "next/link";
 import { useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
@@ -95,39 +95,35 @@ const LoginForm = ({ changeMethod }: { changeMethod: () => void }) => {
 						/>
 					</div>
 					<div className="flex items-center justify-between space-x-2">
-						<button
+						<Button
 							type="submit"
 							className={`bg-orange-500 text-white font-bold px-4 py-2 rounded-md hover:bg-orange-600 disabled:bg-orange-200 disabled:text-gray-500
 							${isLoading && "cursor-not-allowed"}
 							`}
 							disabled={isLoading}
+							isLoading={isLoading}
 						>
 							Login
-						</button>
+						</Button>
 						<span className="text-gray-600">
 							Don&apos;t have an account?
 						</span>
-						<button
+						<Button
 							type="button"
 							className="text-gray-600 font-bold px-4 py-2 rounded-md hover:bg-gray-200 flex items-center"
 							onClick={changeMethod}
+							disabled={isLoading}
 						>
 							Register
-						</button>
+						</Button>
 					</div>
 					<div className="flex justify-between">
-						<Link
-							href="/forgot-password"
-							className="text-gray-600 hover:text-gray-800"
-						>
+						<button className="text-gray-600 hover:text-gray-800">
 							Forgot Password?
-						</Link>
-						<Link
-							href="/help"
-							className="text-gray-600 hover:text-gray-800"
-						>
+						</button>
+						<button className="text-gray-600 hover:text-gray-800">
 							Get help
-						</Link>
+						</button>
 					</div>
 				</form>
 				<SocialLogin />

@@ -1,6 +1,7 @@
 "use client";
 
 import SignupIllustration from "@/../public/assets/images/signup-illustration.webp";
+import { Button } from "@nextui-org/react";
 import axios from "axios";
 import { signIn } from "next-auth/react";
 import Image from "next/image";
@@ -143,15 +144,16 @@ const RegisterForm = ({ changeMethod }: { changeMethod: () => void }) => {
 						/>
 					</div>
 					<div className="flex items-center justify-between space-x-2">
-						<button
+						<Button
 							type="submit"
 							className={`bg-orange-500 text-white font-bold px-4 py-2 rounded-md hover:bg-orange-600 disabled:bg-orange-200 disabled:text-gray-500
 							${isLoading && "cursor-not-allowed"}
 							`}
 							disabled={isLoading}
+							isLoading={isLoading}
 						>
 							Register
-						</button>
+						</Button>
 						<span className="text-gray-600">
 							Already have an account?
 						</span>
@@ -159,6 +161,7 @@ const RegisterForm = ({ changeMethod }: { changeMethod: () => void }) => {
 							type="button"
 							className="text-gray-600 font-bold px-4 py-2 rounded-md hover:bg-gray-200 flex items-center"
 							onClick={changeMethod}
+							disabled={isLoading}
 						>
 							Login
 						</button>

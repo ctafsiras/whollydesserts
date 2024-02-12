@@ -13,7 +13,7 @@ const abhayaLibre = Abhaya_Libre({
 });
 
 export const metadata: Metadata = {
-  title: "Wholly Desserts",
+  title: "Wholly Desserts | Home",
   description: "Wholly Desserts Official Web Application",
 };
 

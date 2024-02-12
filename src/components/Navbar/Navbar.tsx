@@ -105,23 +105,22 @@ const Navbar = () => {
 						>
 							CONTACT
 						</Link>
-						{status !== "loading" &&
-							status === "unauthenticated" && (
-								<Link
-									href={"/authentication"}
-									className={`nav-link uppercase ${
-										pathname === "/authentication" &&
-										"active-link"
-									}`}
-								>
-									Register
-								</Link>
-							)}
+						{status === "unauthenticated" && (
+							<Link
+								href={"/authentication"}
+								className={`nav-link uppercase ${
+									pathname === "/authentication" &&
+									"active-link"
+								}`}
+							>
+								Register
+							</Link>
+						)}
 					</ul>
 				</nav>
 				<div className="flex gap-6">
 					<TbSearch className="cursor-pointer w-6 h-6 hover:text-[#FF6F00] transition duration-300" />
-					{status !== "loading" && status === "authenticated" && (
+					{status === "authenticated" && (
 						<>
 							<BsCart
 								className="cursor-pointer w-6 h-6 active:text-[#FF6F00] transition duration-300"

@@ -16,6 +16,7 @@ import {
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { BsCart } from "react-icons/bs";
 import { IoMdLogOut } from "react-icons/io";
 import "./Navbar.css";
 
@@ -121,10 +122,16 @@ const Navbar = () => {
 				<div className="flex gap-6">
 					<TbSearch className="cursor-pointer w-6 h-6 hover:text-[#FF6F00] transition duration-300" />
 					{status !== "loading" && status === "authenticated" && (
-						<IoMdLogOut
-							className="cursor-pointer w-6 h-6 hover:text-[#FF6F00] transition duration-300"
-							onClick={() => signOut()}
-						/>
+						<>
+							<BsCart
+								className="cursor-pointer w-6 h-6 active:text-[#FF6F00] transition duration-300"
+								onClick={() => router.push("/cart")}
+							/>
+							<IoMdLogOut
+								className="cursor-pointer w-6 h-6 hover:text-[#FF6F00] transition duration-300"
+								onClick={() => signOut()}
+							/>
+						</>
 					)}
 					<RiMenu3Fill
 						className="cursor-pointer w-6 h-6 hover:text-[#FF6F00] transition duration-300 lg:hidden"

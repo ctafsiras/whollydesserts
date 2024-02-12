@@ -70,3 +70,26 @@ export async function POST(request: NextRequest) {
 		return new Response("Internal Server Error", { status: 500 });
 	}
 }
+export async function GET(request: NextRequest) {
+	try {
+		const searchParams = request.nextUrl.searchParams;
+		const userId = searchParams.get("userId");
+		if (!userId) {
+			return Response.json({
+				message: "User not found. User ID required",
+				status: 404,
+			});
+		}
+
+		const cartItems = await prisma.cart.findMany({
+			where: {
+				userId,
+			},
+		});
+
+		return Response.json(cartItems);
+	} catch (error: any) {
+		console.log("ADD_TO_CART_ERROR", error);
+		return new Response("Internal Server Error", { status: 500 });
+	}
+}

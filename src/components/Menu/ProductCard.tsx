@@ -10,10 +10,15 @@ const ProductCard = ({ product }: { product: Product }) => {
 	const { data: user, status } = useSession();
 	const userEmail = user?.user?.email;
 	const handleAddToCart = async (productId: string) => {
+		if (!userEmail) {
+			onOpen();
+			return;
+		}
+
 		const res = await axios.get(`/api/user?email=${userEmail}`);
 		const { id: userId } = res.data;
 
-		axios.post("/api/addToCart", { productId, userId }).then((res) => {
+		axios.post("/api/cart", { productId, userId }).then((res) => {
 			toast.success("Product added to cart");
 			console.log(res.data);
 		});
@@ -52,10 +57,9 @@ const ProductCard = ({ product }: { product: Product }) => {
 				</div>
 				<div className="p-6 pt-0 flex justify-between">
 					<Button
-						className="block select-none rounded-lg bg-gradient-to-r from-amber-200 to-amber-500 py-3 px-6 text-center align-middle font-sans text-xs font-semibold uppercase transition-all duration-200 ease-in-out focus:scale-105 focus:opacity-[0.85] active:scale-100 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none mr-2 hover:shadow-lg hover:from-purple-400 hover:via-pink-500 hover:to-red-500 text-white hover:shadow-purple-500"
+						className="block select-none rounded-lg bg-gradient-to-r from-amber-200 to-amber-500 py-3 px-6 text-center align-middle font-sans text-xs font-semibold uppercase transition-all duration-200 ease-in-out focus:scale-105 focus:opacity-[0.85] active:scale-100 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none mr-2 active:shadow-lg active:from-purple-400 active:via-pink-500 active:to-red-500 text-white active:shadow-purple-500"
 						type="button"
-						// onClick={() => handleAddToCart(product.id)}
-						onPress={onOpen}
+						onClick={() => handleAddToCart(product.id)}
 					>
 						Add to Cart
 					</Button>

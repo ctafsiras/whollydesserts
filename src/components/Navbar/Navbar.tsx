@@ -123,7 +123,7 @@ const Navbar = () => {
 					{status === "authenticated" && (
 						<>
 							<BsCart
-								className="cursor-pointer w-6 h-6 active:text-[#FF6F00] transition duration-300"
+								className="cursor-pointer w-6 h-6 hover:text-[#FF6F00] transition duration-300"
 								onClick={() => router.push("/cart")}
 							/>
 							<IoMdLogOut

@@ -85,6 +85,10 @@ export async function GET(request: NextRequest) {
 			where: {
 				userId,
 			},
+			include: {
+				product: true,
+				user: true,
+			},
 		});
 
 		return Response.json(cartItems);

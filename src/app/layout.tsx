@@ -4,6 +4,7 @@ import NewsLetter from "@/components/NewsLetter/NewsLetter";
 import type { Metadata } from "next";
 import { Abhaya_Libre } from "next/font/google";
 import ToasterContext from "./context/ToasterContext";
+import { UserProvider } from "./contexts/UserProvider";
 import "./globals.css";
 import { Providers } from "./providers";
 
@@ -29,11 +30,13 @@ export default function RootLayout({
 		>
 			<body>
 				<Providers>
-					<Navbar />
-					<ToasterContext />
-					{children}
-					<NewsLetter />
-					<Footer />
+					<UserProvider>
+						<Navbar />
+						<ToasterContext />
+						{children}
+						<NewsLetter />
+						<Footer />
+					</UserProvider>
 				</Providers>
 			</body>
 		</html>

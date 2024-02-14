@@ -35,7 +35,7 @@ const Products = () => {
 					No Products Found!
 				</div>
 			) : (
-				<div className="gap-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 justify-center">
+				<div className="gap-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 justify-center mt-4">
 					{products.map((product: Product) => (
 						<ProductCard
 							key={product.id}

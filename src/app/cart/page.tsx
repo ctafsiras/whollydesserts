@@ -2,7 +2,7 @@ import CartItemsContainer from "@/components/Cart/CartItemsContainer";
 
 export default function Cart() {
 	return (
-		<div className="h-[calc(100vh-6rem)] md:h-[calc(100vh-9rem)] flex flex-col text-red-500 lg:flex-row">
+		<div className="flex flex-col lg:flex-row">
 			{/* PRODUCTS CONTAINER */}
 			<CartItemsContainer />
 			{/* PAYMENT CONTAINER */}

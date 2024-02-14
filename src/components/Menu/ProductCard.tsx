@@ -41,9 +41,9 @@ const ProductCard = ({ product }: { product: Product }) => {
 			)}
 			<div
 				key={product.id}
-				className="rounded-xl bg-white bg-clip-border text-gray-700 shadow-xl"
+				className="rounded-xl bg-white text-gray-700 shadow-xl "
 			>
-				<div className="relative mt-4 h-48 overflow-hidden rounded-t-xl">
+				<div className="relative h-48 overflow-hidden rounded-t-xl">
 					<Image
 						src={product.image}
 						alt={product.name}
@@ -65,8 +65,10 @@ const ProductCard = ({ product }: { product: Product }) => {
 				</div>
 				<div className="p-6 pt-0 flex justify-between">
 					<Button
-						className="bg-gradient-to-r from-amber-200 to-amber-500 font-sans font-semibold uppercase transition-all duration-200 ease-in-out active:scale-100 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none active:shadow-lg active:from-purple-400 active:via-pink-500 active:to-red-500 text-white active:shadow-purple-500"
+						className="font-sans font-semibold uppercase"
 						type="button"
+						color="warning"
+						variant="ghost"
 						onClick={() => handleAddToCart(product.id)}
 						isLoading={isLoading}
 						disabled={isLoading}
@@ -75,7 +77,7 @@ const ProductCard = ({ product }: { product: Product }) => {
 						Add to Cart
 					</Button>
 					<button
-						className="block select-none rounded-lg bg-gradient-to-r from-amber-200 to-amber-500 py-3 px-6 text-center align-middle font-sans text-xs font-semibold uppercase transition-all duration-200 ease-in-out focus:scale-105 focus:opacity-[0.85] active:scale-100 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none ml-2 hover:shadow-lg hover:from-blue-500 hover:to-green-500 text-white hover:shadow-blue-500"
+						className="block select-none rounded-lg bg-gradient-to-r from-amber-200 to-amber-500 py-3 px-6 text-center align-middle font-sans text-xs font-semibold uppercase transition-all duration-200 ease-in-out active:scale-105 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none ml-2 hover:shadow-lg hover:from-blue-500 hover:to-green-500 text-white hover:shadow-blue-500"
 						type="button"
 					>
 						Order Now

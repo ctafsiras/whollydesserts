@@ -3,27 +3,11 @@
 import AdminDashboard from "@/components/Dashboard/Admin/AdminDashboard";
 import UserDashboard from "@/components/Dashboard/User/UserDashboard";
 import { Spinner } from "@nextui-org/react";
-import { User } from "@prisma/client";
-import axios from "axios";
-import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
+import { useContext } from "react";
+import UserContext from "../contexts/UserProvider";
 
 export default function Dashboard() {
-	const { data: session } = useSession();
-	const userEmail = session?.user?.email;
-	const [user, setUser] = useState({} as User);
-
-	useEffect(() => {
-		const fetch = async () => {
-			try {
-				const res = await axios.get(`/api/user?email=${userEmail}`);
-				setUser(res.data);
-			} catch (error) {
-				console.error("Error fetching user:", error);
-			}
-		};
-		fetch();
-	}, [userEmail]);
+	const user = useContext(UserContext);
 
 	return (
 		<section>

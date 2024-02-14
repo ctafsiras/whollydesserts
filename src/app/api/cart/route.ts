@@ -24,7 +24,7 @@ export async function POST(request: NextRequest) {
 			);
 		}
 
-		let cartItem = await prisma.cart.findFirst({
+		const cartItemExist = await prisma.cart.findFirst({
 			where: {
 				userId: userId,
 				productId: productId,
@@ -35,22 +35,10 @@ export async function POST(request: NextRequest) {
 			},
 		});
 
-		if (!cartItem) {
-			cartItem = await prisma.cart.create({
-				data: {
-					userId: userId,
-					productId: productId,
-					quantity: 1,
-				},
-				include: {
-					product: true,
-					user: true,
-				},
-			});
-		} else {
-			cartItem = await prisma.cart.update({
+		if (cartItemExist) {
+			const cartItem = await prisma.cart.update({
 				where: {
-					id: cartItem.id,
+					id: cartItemExist.id,
 				},
 				data: {
 					quantity: {
@@ -62,11 +50,51 @@ export async function POST(request: NextRequest) {
 					user: true,
 				},
 			});
-		}
+			return Response.json(cartItem);
+		} else {
+			const cartItem = await prisma.cart.create({
+				data: {
+					userId: userId,
+					productId: productId,
+					quantity: 1,
+				},
+				include: {
+					product: true,
+					user: true,
+				},
+			});
 
-		return Response.json(cartItem);
+			return Response.json(cartItem);
+		}
 	} catch (error: any) {
 		console.log("ADD_TO_CART_ERROR", error);
+		return new Response("Internal Server Error", { status: 500 });
+	}
+}
+export async function PUT(request: NextRequest) {
+	try {
+		const data = await request.json();
+		const { id, changeType } = data;
+
+		const updatedCartQuantity = await prisma.cart.update({
+			where: {
+				id,
+			},
+			data: {
+				quantity:
+					changeType === "increase"
+						? { increment: 1 }
+						: { decrement: 1 },
+			},
+			include: {
+				product: true,
+				user: true,
+			},
+		});
+
+		return Response.json(updatedCartQuantity);
+	} catch (error: any) {
+		console.log("UPDATE_CART_QUANTITY_ERROR", error);
 		return new Response("Internal Server Error", { status: 500 });
 	}
 }

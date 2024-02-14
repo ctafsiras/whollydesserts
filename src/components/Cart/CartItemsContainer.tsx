@@ -1,14 +1,23 @@
 "use client";
 
 import UserContext from "@/app/contexts/UserProvider";
-import { Cart } from "@prisma/client";
+import { Product } from "@prisma/client";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import CartItem from "./CartItem";
 
+type NewCartType = {
+	id: string;
+	userId: string;
+	productId: string;
+	product: Product;
+	quantity: number;
+	dateAdded: Date;
+};
+
 const CartItemsContainer = () => {
 	const user = useContext(UserContext);
-	const [cartFoods, setCartFoods] = useState([] as Cart[]);
+	const [cartFoods, setCartFoods] = useState([] as NewCartType[]);
 
 	useEffect(() => {
 		const fetchCartFoods = async () => {

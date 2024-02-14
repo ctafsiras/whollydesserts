@@ -44,9 +44,9 @@ const QuantityController = ({ cartItem }: { cartItem: Cart }) => {
 			</button>
 			<h1 className="text-xl font-bold">{quantity}</h1>
 			<button
-				className="p-1 bg-black text-white rounded-full text-xs"
+				className="p-1 bg-black text-white rounded-full text-xs disabled:bg-gray-400 disabled:cursor-not-allowed"
 				onClick={() => handleQuntityChange("decrease")}
-				disabled={isLoading}
+				disabled={isLoading || quantity <= 1}
 			>
 				<FaMinus />
 			</button>

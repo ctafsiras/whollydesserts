@@ -16,20 +16,22 @@ type NewCartType = {
 };
 
 const CartItemsContainer = () => {
-	const user = useContext(UserContext);
+	const { id } = useContext(UserContext);
 	const [cartFoods, setCartFoods] = useState([] as NewCartType[]);
 
 	useEffect(() => {
 		const fetchCartFoods = async () => {
 			try {
-				const response = await axios.get(`/api/cart?userId=${user.id}`);
-				setCartFoods(response.data);
+				if (id) {
+					const response = await axios.get(`/api/cart?userId=${id}`);
+					setCartFoods(response.data);
+				}
 			} catch (error) {
 				console.log(error);
 			}
 		};
 		fetchCartFoods();
-	}, [user.id]);
+	}, [id]);
 
 	return (
 		<div className="max-h-screen flex flex-col gap-y-2 justify-start overflow-scroll lg:w-2/3 lg:px-20">

@@ -1,6 +1,8 @@
 import { Button } from "@nextui-org/react";
 import { Product } from "@prisma/client";
+import axios from "axios";
 import Image from "next/image";
+import toast from "react-hot-toast";
 import { FaTrash } from "react-icons/fa";
 import QuantityController from "./QuantityController";
 
@@ -17,6 +19,17 @@ type CartItemProps = {
 
 const CartItem: React.FC<CartItemProps> = ({ cartItem }) => {
 	const { image, name, description, price } = cartItem.product;
+
+	const handleDeleteCart = () => {
+		axios.delete(`/api/cart?cartId=${cartItem.id}`).then((res) => {
+			if (res.data.status === 200) {
+				toast.success(res.data.message);
+			}
+			if (res.data.status === 404) {
+				toast.error(res.data.message);
+			}
+		});
+	};
 	return (
 		<div className="flex flex-col lg:flex-row items-center justify-between shadow-xl p-2 lg:pr-4 rounded-xl font-sans">
 			<div className="flex items-center gap-2 lg:w-7/12">
@@ -46,6 +59,7 @@ const CartItem: React.FC<CartItemProps> = ({ cartItem }) => {
 					isIconOnly
 					color="danger"
 					aria-label="Delete"
+					onPress={handleDeleteCart}
 				>
 					<FaTrash />
 				</Button>

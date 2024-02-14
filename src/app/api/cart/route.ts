@@ -125,3 +125,46 @@ export async function GET(request: NextRequest) {
 		return new Response("Internal Server Error", { status: 500 });
 	}
 }
+export async function DELETE(request: NextRequest) {
+	try {
+		const searchParams = request.nextUrl.searchParams;
+		const id = searchParams.get("cartId");
+
+		if (!id) {
+			return Response.json({
+				message: "Cart Id required",
+				status: 404,
+				success: false,
+			});
+		}
+
+		const isCartExists = await prisma.cart.findUnique({
+			where: {
+				id,
+			},
+		});
+
+		if (!isCartExists) {
+			return Response.json({
+				message: "Cart item not found",
+				status: 404,
+				success: false,
+			});
+		}
+
+		await prisma.cart.delete({
+			where: {
+				id,
+			},
+		});
+
+		return Response.json({
+			message: "Cart item deleted",
+			status: 200,
+			success: true,
+		});
+	} catch (error: any) {
+		console.log("DELETE_CART_ITEM_ERROR", error);
+		return new Response("DELETE_CART_ITEM_ERROR", { status: 500 });
+	}
+}

@@ -2,6 +2,7 @@ import { Button } from "@nextui-org/react";
 import { Product } from "@prisma/client";
 import axios from "axios";
 import Image from "next/image";
+import { useState } from "react";
 import toast from "react-hot-toast";
 import { FaTrash } from "react-icons/fa";
 import QuantityController from "./QuantityController";
@@ -19,19 +20,27 @@ type CartItemProps = {
 
 const CartItem: React.FC<CartItemProps> = ({ cartItem }) => {
 	const { image, name, description, price } = cartItem.product;
+	const [isLoading, setIsLoading] = useState(false);
 
 	const handleDeleteCart = () => {
-		axios.delete(`/api/cart?cartId=${cartItem.id}`).then((res) => {
-			if (res.data.status === 200) {
-				toast.success(res.data.message);
-			}
-			if (res.data.status === 404) {
-				toast.error(res.data.message);
-			}
-		});
+		setIsLoading(true);
+
+		axios
+			.delete(`/api/cart?cartId=${cartItem.id}`)
+			.then((res) => {
+				if (res.data.status === 200) {
+					toast.success(res.data.message);
+				}
+				if (res.data.status === 404) {
+					toast.error(res.data.message);
+				}
+			})
+			.finally(() => {
+				setIsLoading(false);
+			});
 	};
 	return (
-		<div className="flex flex-col lg:flex-row items-center justify-between shadow-xl p-2 lg:pr-4 rounded-xl font-sans">
+		<div className="flex flex-col lg:flex-row items-center justify-between shadow-xl pb-2 lg:p-2 lg:pr-4 rounded-xl font-sans">
 			<div className="flex items-center gap-2 lg:w-7/12">
 				<Image
 					src={image}
@@ -40,15 +49,12 @@ const CartItem: React.FC<CartItemProps> = ({ cartItem }) => {
 					height={150}
 					className="rounded-lg"
 				/>
-				<div className="lg:w-72d">
-					<h1 className="uppercase text-md lg:text-xl font-bold truncate overflow-hidden">
+				<div>
+					<h1 className="uppercase text-md lg:text-xl font-bold line-clamp-1 overflow-hidden">
 						{name}
 					</h1>
-					<span className="text-sm lg:hidden">
-						{description.slice(0, 70).concat("...")}
-					</span>
-					<span className="text-sm hidden lg:block">
-						{description.split(".")[0]}.
+					<span className="text-sm line-clamp-4 leading-[18px]">
+						{description}
 					</span>
 				</div>
 			</div>
@@ -60,6 +66,7 @@ const CartItem: React.FC<CartItemProps> = ({ cartItem }) => {
 					color="danger"
 					aria-label="Delete"
 					onPress={handleDeleteCart}
+					isLoading={isLoading}
 				>
 					<FaTrash />
 				</Button>

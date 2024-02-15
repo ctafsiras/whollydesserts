@@ -30,6 +30,7 @@ const CartItem: React.FC<CartItemProps> = ({ cartItem, refetch }) => {
 			.delete(`/api/cart?cartId=${cartItem.id}`)
 			.then((res) => {
 				if (res.data.status === 200) {
+					refetch();
 					toast.success(res.data.message);
 				}
 				if (res.data.status === 404) {
@@ -37,7 +38,6 @@ const CartItem: React.FC<CartItemProps> = ({ cartItem, refetch }) => {
 				}
 			})
 			.finally(() => {
-				refetch();
 				setIsLoading(false);
 			});
 	};
@@ -61,8 +61,10 @@ const CartItem: React.FC<CartItemProps> = ({ cartItem, refetch }) => {
 				</div>
 			</div>
 			<div className="flex items-center justify-between w-4/5 lg:w-4/12">
-				<QuantityController cartItem={cartItem} />
-				<h2 className="font-bold">${price * cartItem.quantity}/-</h2>
+				<QuantityController
+					cartItem={cartItem}
+					foodPrice={price}
+				/>
 				<Button
 					isIconOnly
 					color="danger"

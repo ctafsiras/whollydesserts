@@ -1,39 +1,44 @@
+import UserContext from "@/app/contexts/UserProvider";
+import useCart from "@/app/hooks/useCart";
 import { Button, Image, useDisclosure } from "@nextui-org/react";
 import { Product } from "@prisma/client";
 import axios from "axios";
-import { useSession } from "next-auth/react";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import toast from "react-hot-toast";
 import LoginModal from "./LoginModal";
 
 const ProductCard = ({ product }: { product: Product }) => {
 	const { isOpen, onOpen, onOpenChange } = useDisclosure();
 	const [isLoading, setIsLoading] = useState(false);
-	const { data: user, status } = useSession();
-	const userEmail = user?.user?.email;
+	const { id } = useContext(UserContext);
+	const { refetch } = useCart();
 
 	const handleAddToCart = async (productId: string) => {
 		setIsLoading(true);
 
-		if (!userEmail) {
+		if (!id) {
 			onOpen();
 			setIsLoading(false);
 			return;
 		}
 
-		const res = await axios.get(`/api/user?email=${userEmail}`);
-		const { id: userId } = res.data;
-
-		axios.post("/api/cart", { productId, userId }).then((res) => {
-			if (res.data.id) {
-				toast.success("Product added to cart");
+		axios
+			.post("/api/cart", { productId, id })
+			.then((res) => {
+				if (res.data.id) {
+					refetch();
+					toast.success("Product added to cart");
+					setIsLoading(false);
+				}
+			})
+			.catch((err) => {
+				toast.error("Failed to add product to cart");
 				setIsLoading(false);
-			}
-		});
+			});
 	};
 	return (
 		<>
-			{status === "unauthenticated" && (
+			{!id && (
 				<LoginModal
 					isOpen={isOpen}
 					onOpenChange={onOpenChange}
@@ -59,8 +64,8 @@ const ProductCard = ({ product }: { product: Product }) => {
 							${product.price}
 						</p>
 					</div>
-					<p className="block font-sans text-sm font-normal leading-normal text-gray-700 antialiased opacity-75">
-						{product.description.slice(0, 160)}...
+					<p className="font-sans text-sm font-normal leading-normal text-gray-700 antialiased opacity-75 line-clamp-4">
+						{product.description}
 					</p>
 				</div>
 				<div className="p-6 pt-0 flex justify-between">

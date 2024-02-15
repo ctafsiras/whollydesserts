@@ -46,9 +46,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 						},
 					}}
 				>
-					<p className="my-2 text-center">
-						{product.description.split(" ").slice(0, 15).join(" ")}
-						...
+					<p className="my-2 text-center line-clamp-3">
+						{product.description}
 					</p>
 				</Tooltip>
 			</CardBody>

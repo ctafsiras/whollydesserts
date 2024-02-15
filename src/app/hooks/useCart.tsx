@@ -6,6 +6,7 @@ import UserContext from "../contexts/UserProvider";
 const useCart = () => {
 	const { id } = useContext(UserContext);
 	const [isLoading, setIsLoading] = useState(true);
+
 	const { refetch, data: cart = [] } = useQuery({
 		queryKey: ["cart", id],
 		enabled: !!id,

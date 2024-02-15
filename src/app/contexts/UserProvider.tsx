@@ -13,11 +13,13 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
 	useEffect(() => {
 		const fetchUserData = async () => {
 			try {
-				const response = await fetch(
-					`/api/user?email=${session?.user?.email}`
-				);
-				const data = await response.json();
-				setUser(data);
+				if (session?.user?.email) {
+					const response = await fetch(
+						`/api/user?email=${session?.user?.email}`
+					);
+					const data = await response.json();
+					setUser(data);
+				}
 			} catch (error) {
 				console.error("Error fetching user data:", error);
 			}

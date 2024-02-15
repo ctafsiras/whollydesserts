@@ -1,12 +1,13 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { FaChevronDown } from "react-icons/fa";
 import { RiMenu3Fill } from "react-icons/ri";
 import { TbSearch } from "react-icons/tb";
 import Drawer from "../Drawer/Drawer";
 
+import UserContext from "@/app/contexts/UserProvider";
 import useCart from "@/app/hooks/useCart";
 import {
 	Badge,
@@ -15,7 +16,7 @@ import {
 	DropdownMenu,
 	DropdownTrigger,
 } from "@nextui-org/react";
-import { signOut, useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { BsCart } from "react-icons/bs";
@@ -25,8 +26,8 @@ import "./Navbar.css";
 const Navbar = () => {
 	const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 	const pathname = usePathname();
-	const { status } = useSession();
 	const router = useRouter();
+	const { id } = useContext(UserContext);
 	const { cart } = useCart();
 	return (
 		<>
@@ -77,7 +78,7 @@ const Navbar = () => {
 						>
 							MENU
 						</Link>
-						{status === "authenticated" && (
+						{id && (
 							<Dropdown>
 								<DropdownTrigger>
 									<li className="nav-link flex items-center gap-2 uppercase">
@@ -108,7 +109,7 @@ const Navbar = () => {
 						>
 							CONTACT
 						</Link>
-						{status === "unauthenticated" && (
+						{!id && (
 							<Link
 								href={"/authentication"}
 								className={`nav-link uppercase ${
@@ -123,7 +124,7 @@ const Navbar = () => {
 				</nav>
 				<div className="flex gap-6">
 					<TbSearch className="cursor-pointer w-6 h-6 hover:text-[#FF6F00] transition duration-300" />
-					{status === "authenticated" && (
+					{id && (
 						<>
 							<Badge
 								color="warning"

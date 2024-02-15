@@ -3,10 +3,10 @@ import { NextRequest } from "next/server";
 
 export async function POST(request: NextRequest) {
 	try {
-		const { userId, productId } = await request.json();
+		const { id, productId } = await request.json();
 
 		const user = await prisma.user.findUnique({
-			where: { id: userId },
+			where: { id },
 		});
 
 		if (!user) {
@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
 
 		const cartItemExist = await prisma.cart.findFirst({
 			where: {
-				userId: userId,
+				userId: id,
 				productId: productId,
 			},
 			include: {
@@ -54,7 +54,7 @@ export async function POST(request: NextRequest) {
 		} else {
 			const cartItem = await prisma.cart.create({
 				data: {
-					userId: userId,
+					userId: id,
 					productId: productId,
 					quantity: 1,
 				},

@@ -20,14 +20,14 @@ const QuantityController: React.FC<QuantityControllerProps> = ({
 
 	const handleQuntityChange = (action: "increase" | "decrease") => {
 		if (action === "increase") {
-			setQuantity((prev) => prev + 1);
+			setQuantity(quantity + 1);
 			axios.put("/api/cart", { id, changeType: action }).then((res) => {
 				if (res.statusText === "OK") {
 					toast.success(`Quantity increased`);
 				}
 			});
 		} else {
-			setQuantity((prev) => prev - 1);
+			setQuantity(quantity - 1);
 			axios.put("/api/cart", { id, changeType: action }).then((res) => {
 				if (res.statusText === "OK") {
 					toast.success(`Quantity descreased`);

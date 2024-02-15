@@ -7,7 +7,9 @@ import { RiMenu3Fill } from "react-icons/ri";
 import { TbSearch } from "react-icons/tb";
 import Drawer from "../Drawer/Drawer";
 
+import useCart from "@/app/hooks/useCart";
 import {
+	Badge,
 	Dropdown,
 	DropdownItem,
 	DropdownMenu,
@@ -25,6 +27,7 @@ const Navbar = () => {
 	const pathname = usePathname();
 	const { status } = useSession();
 	const router = useRouter();
+	const { cart } = useCart();
 	return (
 		<>
 			<Drawer
@@ -122,10 +125,15 @@ const Navbar = () => {
 					<TbSearch className="cursor-pointer w-6 h-6 hover:text-[#FF6F00] transition duration-300" />
 					{status === "authenticated" && (
 						<>
-							<BsCart
-								className="cursor-pointer w-6 h-6 hover:text-[#FF6F00] transition duration-300"
-								onClick={() => router.push("/cart")}
-							/>
+							<Badge
+								color="warning"
+								content={cart.length}
+							>
+								<BsCart
+									className="cursor-pointer w-6 h-6 hover:text-[#FF6F00] transition duration-300"
+									onClick={() => router.push("/cart")}
+								/>
+							</Badge>
 							<IoMdLogOut
 								className="cursor-pointer w-6 h-6 hover:text-[#FF6F00] transition duration-300"
 								onClick={() => signOut()}

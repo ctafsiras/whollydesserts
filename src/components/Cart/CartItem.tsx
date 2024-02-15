@@ -16,9 +16,10 @@ type CartItemProps = {
 		quantity: number;
 		dateAdded: Date;
 	};
+	refetch: () => void;
 };
 
-const CartItem: React.FC<CartItemProps> = ({ cartItem }) => {
+const CartItem: React.FC<CartItemProps> = ({ cartItem, refetch }) => {
 	const { image, name, description, price } = cartItem.product;
 	const [isLoading, setIsLoading] = useState(false);
 
@@ -36,6 +37,7 @@ const CartItem: React.FC<CartItemProps> = ({ cartItem }) => {
 				}
 			})
 			.finally(() => {
+				refetch();
 				setIsLoading(false);
 			});
 	};

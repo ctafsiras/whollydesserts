@@ -1,83 +1,186 @@
 "use client";
 
-import Image from "next/image";
-import { useContext, useState } from "react";
-import { FaChevronDown } from "react-icons/fa";
-import { RiMenu3Fill } from "react-icons/ri";
-import { TbSearch } from "react-icons/tb";
-import Drawer from "../Drawer/Drawer";
-
 import UserContext from "@/app/contexts/UserProvider";
 import useCart from "@/app/hooks/useCart";
 import {
-	Badge,
+	Avatar,
+	Button,
 	Dropdown,
 	DropdownItem,
 	DropdownMenu,
 	DropdownTrigger,
+	NavbarBrand,
+	NavbarContent,
+	NavbarItem,
+	NavbarMenu,
+	NavbarMenuItem,
+	NavbarMenuToggle,
+	Navbar as NextuiNavbar,
 } from "@nextui-org/react";
 import { signOut } from "next-auth/react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { BsCart } from "react-icons/bs";
-import { IoMdLogOut } from "react-icons/io";
+import { useContext, useState } from "react";
+import Logo from "../../../public/assets/images/logo.png";
 import "./Navbar.css";
 
 const Navbar = () => {
-	const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+	const [isMenuOpen, setIsMenuOpen] = useState(false);
 	const pathname = usePathname();
 	const router = useRouter();
-	const { id } = useContext(UserContext);
+	const { id, name, email, image } = useContext(UserContext);
 	const { cart } = useCart();
+
+	const navItems = [
+		{ label: "Home", link: "/" },
+		{ label: "About", link: "/about" },
+		{ label: "Menu", link: "/menu" },
+		{ label: "Contact", link: "/contact" },
+	];
+
 	return (
-		<>
-			<Drawer
-				isOpen={isDrawerOpen}
-				setIsOpen={() => setIsDrawerOpen(!isDrawerOpen)}
-			/>
-			<section
-				className={`flex justify-between items-center py-5 px-5 md:pt-2 lg:px-2 lg:py-7 max-w-screen-md lg:max-w-full xl:max-w-screen-xl mx-auto border-b border-gray-100 ${
-					(pathname === "/dashboard" ||
-						pathname === "/dashboard/items" ||
-						pathname === "/dashboard/additem" ||
-						pathname === "/dashboard/users") &&
-					"hidden"
-				}`}
-			>
-				<div className="relative w-32 h-7 md:w-32">
+		<NextuiNavbar
+			onMenuOpenChange={setIsMenuOpen}
+			shouldHideOnScroll
+			isBordered
+			maxWidth="xl"
+			className={`${
+				(pathname === "/dashboard" ||
+					pathname === "/dashboard/items" ||
+					pathname === "/dashboard/additem" ||
+					pathname === "/dashboard/users") &&
+				"hidden"
+			}`}
+		>
+			<NavbarContent>
+				<NavbarBrand
+					as={Link}
+					href="/"
+				>
 					<Image
-						src="/assets/images/logo.png"
-						alt=""
-						fill
-						className="hover:-translate-y-2 transition duration-500 cursor-pointer"
+						src={Logo}
+						alt="logo"
+						width={150}
+						height={50}
+						className="active:scale-105 lg:active:scale-100 lg:hover:-translate-y-2 transition duration-500"
 					/>
-				</div>
-				<nav className="hidden lg:block">
+				</NavbarBrand>
+			</NavbarContent>
+			<NavbarContent
+				className="hidden sm:flex gap-10 font-sans"
+				justify="center"
+			>
+				{navItems.map((navItem) => (
+					<NavbarItem key={navItem.link}>
+						<Link
+							href={navItem.link}
+							className={`nav-link ${
+								pathname === navItem.link && "active-link"
+							}`}
+						>
+							{navItem.label}
+						</Link>
+					</NavbarItem>
+				))}
+			</NavbarContent>
+			{id ? (
+				<NavbarContent
+					as="div"
+					justify="end"
+				>
+					<Dropdown placement="bottom-end">
+						<DropdownTrigger>
+							<Avatar
+								isBordered
+								as="button"
+								className="transition-transform font-sans"
+								color="secondary"
+								name={name}
+								size="sm"
+								src={image}
+							/>
+						</DropdownTrigger>
+						<DropdownMenu
+							aria-label="Profile Actions"
+							variant="flat"
+							className="font-sans"
+						>
+							<DropdownItem
+								key="profile"
+								className="h-14 gap-2"
+							>
+								<p className="font-semibold">Signed in as</p>
+								<p className="font-semibold">{email}</p>
+							</DropdownItem>
+							<DropdownItem
+								as={Link}
+								href={"/dashboard"}
+								key="dashboard"
+							>
+								Dashboard
+							</DropdownItem>
+							<DropdownItem
+								as={Link}
+								href={"/cart"}
+								key="cart"
+							>
+								Cart ({cart.length})
+							</DropdownItem>
+							<DropdownItem
+								as={Button}
+								key="logout"
+								color="danger"
+								onPress={() => signOut()}
+							>
+								Log Out
+							</DropdownItem>
+						</DropdownMenu>
+					</Dropdown>
+				</NavbarContent>
+			) : (
+				<NavbarContent
+					justify="end"
+					className="font-sans"
+				>
+					<NavbarItem>
+						<Button
+							as={Link}
+							color="warning"
+							href="/authentication"
+							variant="solid"
+							className="font-bold"
+						>
+							Login
+						</Button>
+					</NavbarItem>
+					<NavbarMenuToggle
+						aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+						className="sm:hidden"
+					/>
+				</NavbarContent>
+			)}
+			<NavbarMenu>
+				{navItems.map((item, index) => (
+					<NavbarMenuItem key={`${item}-${index}`}>
+						<Link
+							color={
+								index === 2
+									? "primary"
+									: index === navItems.length - 1
+									? "danger"
+									: "foreground"
+							}
+							className="w-full font-sans"
+							href={item.link}
+						>
+							{item.label}
+						</Link>
+					</NavbarMenuItem>
+				))}
+			</NavbarMenu>
+			{/* <nav className="hidden lg:block">
 					<ul className="flex gap-10 font-sans">
-						<Link
-							href={"/"}
-							className={`nav-link ${
-								pathname === "/" && "active-link"
-							}`}
-						>
-							HOME
-						</Link>
-						<Link
-							href={"/about"}
-							className={`nav-link ${
-								pathname === "/about" && "active-link"
-							}`}
-						>
-							ABOUT
-						</Link>
-						<Link
-							href={"/menu"}
-							className={`nav-link ${
-								pathname === "/menu" && "active-link"
-							}`}
-						>
-							MENU
-						</Link>
 						{id && (
 							<Dropdown>
 								<DropdownTrigger>
@@ -101,53 +204,10 @@ const Navbar = () => {
 								</DropdownMenu>
 							</Dropdown>
 						)}
-						<Link
-							href={"/contact"}
-							className={`nav-link ${
-								pathname === "/contact" && "active-link"
-							}`}
-						>
-							CONTACT
-						</Link>
-						{!id && (
-							<Link
-								href={"/authentication"}
-								className={`nav-link uppercase ${
-									pathname === "/authentication" &&
-									"active-link"
-								}`}
-							>
-								Login
-							</Link>
-						)}
 					</ul>
 				</nav>
-				<div className="flex gap-6">
-					<TbSearch className="cursor-pointer w-6 h-6 hover:text-[#FF6F00] transition duration-300" />
-					{id && (
-						<>
-							<Badge
-								color="warning"
-								content={cart.length}
-							>
-								<BsCart
-									className="cursor-pointer w-6 h-6 hover:text-[#FF6F00] transition duration-300"
-									onClick={() => router.push("/cart")}
-								/>
-							</Badge>
-							<IoMdLogOut
-								className="cursor-pointer w-6 h-6 hover:text-[#FF6F00] transition duration-300"
-								onClick={() => signOut()}
-							/>
-						</>
-					)}
-					<RiMenu3Fill
-						className="cursor-pointer w-6 h-6 hover:text-[#FF6F00] transition duration-300 lg:hidden"
-						onClick={() => setIsDrawerOpen(true)}
-					/>
-				</div>
-			</section>
-		</>
+				<div className="flex gap-6"></div> */}
+		</NextuiNavbar>
 	);
 };
 

@@ -43,7 +43,7 @@ const RegisterForm = ({ changeMethod }: { changeMethod: () => void }) => {
 					redirect: false,
 				}).finally(() => {
 					setIsLoading(false);
-					router.back();
+					router.push("/menu");
 				});
 			})
 			.catch((err) => {

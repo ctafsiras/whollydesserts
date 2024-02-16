@@ -18,24 +18,13 @@ const QuantityController: React.FC<QuantityControllerProps> = ({
 	const [quantity, setQuantity] = useState(cartItem.quantity);
 	const { id } = cartItem;
 
-	const handleQuntityChange = (action: "increase" | "decrease") => {
-		if (action === "increase") {
-			setQuantity(quantity + 1);
-			axios.put("/api/cart", { id, changeType: action }).then((res) => {
-				if (res.data.quantity) {
-					setQuantity(res.data.quantity);
-					toast.success(`Quantity increased`);
-				}
-			});
-		} else {
-			setQuantity(quantity - 1);
-			axios.put("/api/cart", { id, changeType: action }).then((res) => {
-				if (res.data.quantity) {
-					setQuantity(res.data.quantity);
-					toast.success(`Quantity descreased`);
-				}
-			});
-		}
+	const handleQuntityChange = (newQuantity: any) => {
+		setQuantity(newQuantity);
+		axios.put("/api/cart", { cartId: id, newQuantity }).then((res) => {
+			if (res.data.quantity) {
+				toast.success(`Quantity updated`);
+			}
+		});
 	};
 
 	return (
@@ -43,14 +32,14 @@ const QuantityController: React.FC<QuantityControllerProps> = ({
 			<div className="flex items-center gap-2 px-1 bg-white rounded-full">
 				<button
 					className="p-1 bg-black text-white rounded-full text-xs disabled:bg-gray-400 disabled:cursor-not-allowed"
-					onClick={() => handleQuntityChange("increase")}
+					onClick={() => handleQuntityChange(quantity + 1)}
 				>
 					<FaPlus />
 				</button>
 				<h1 className="text-xl font-bold">{quantity}</h1>
 				<button
 					className="p-1 bg-black text-white rounded-full text-xs disabled:bg-gray-400 disabled:cursor-not-allowed"
-					onClick={() => handleQuntityChange("decrease")}
+					onClick={() => handleQuntityChange(quantity - 1)}
 					disabled={quantity <= 1}
 				>
 					<FaMinus />

@@ -28,7 +28,6 @@ import "./Navbar.css";
 const Navbar = () => {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 	const pathname = usePathname();
-	const router = useRouter();
 	const { id, name, email, image } = useContext(UserContext);
 	const { cart } = useCart();
 
@@ -54,17 +53,20 @@ const Navbar = () => {
 			}`}
 		>
 			<NavbarContent>
-				<NavbarBrand
-					as={Link}
-					href="/"
-				>
-					<Image
-						src={Logo}
-						alt="logo"
-						width={150}
-						height={50}
-						className="active:scale-105 lg:active:scale-100 lg:hover:-translate-y-2 transition duration-500"
-					/>
+				<NavbarMenuToggle
+					aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+					className="sm:hidden"
+				/>
+				<NavbarBrand>
+					<Link href={"/"}>
+						<Image
+							src={Logo}
+							alt="logo"
+							width={150}
+							height={50}
+							className="active:scale-105 lg:active:scale-100 lg:hover:-translate-y-2 transition duration-500"
+						/>
+					</Link>
 				</NavbarBrand>
 			</NavbarContent>
 			<NavbarContent
@@ -84,11 +86,11 @@ const Navbar = () => {
 					</NavbarItem>
 				))}
 			</NavbarContent>
-			{id ? (
-				<NavbarContent
-					as="div"
-					justify="end"
-				>
+			<NavbarContent
+				justify="end"
+				className="font-sans"
+			>
+				{id ? (
 					<Dropdown placement="bottom-end">
 						<DropdownTrigger>
 							<Avatar
@@ -137,12 +139,7 @@ const Navbar = () => {
 							</DropdownItem>
 						</DropdownMenu>
 					</Dropdown>
-				</NavbarContent>
-			) : (
-				<NavbarContent
-					justify="end"
-					className="font-sans"
-				>
+				) : (
 					<NavbarItem>
 						<Button
 							as={Link}
@@ -154,24 +151,13 @@ const Navbar = () => {
 							Login
 						</Button>
 					</NavbarItem>
-					<NavbarMenuToggle
-						aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-						className="sm:hidden"
-					/>
-				</NavbarContent>
-			)}
+				)}
+			</NavbarContent>
 			<NavbarMenu>
-				{navItems.map((item, index) => (
-					<NavbarMenuItem key={`${item}-${index}`}>
+				{navItems.map((item) => (
+					<NavbarMenuItem key={item.link}>
 						<Link
-							color={
-								index === 2
-									? "primary"
-									: index === navItems.length - 1
-									? "danger"
-									: "foreground"
-							}
-							className="w-full font-sans"
+							className="w-full font-sans "
 							href={item.link}
 						>
 							{item.label}

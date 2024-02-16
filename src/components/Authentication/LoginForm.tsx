@@ -112,8 +112,11 @@ const LoginForm = ({ changeMethod }: { changeMethod: () => void }) => {
 						>
 							Login
 						</Button>
+					</div>
+
+					<div className="flex items-center justify-between space-x-2">
 						<span className="text-gray-600">
-							Don&apos;t have an account?
+							Don&rsquo;t have an account?
 						</span>
 						<Button
 							type="button"
@@ -124,10 +127,14 @@ const LoginForm = ({ changeMethod }: { changeMethod: () => void }) => {
 							Register
 						</Button>
 					</div>
-					<div className="flex justify-between">
-						<button className="text-gray-600 hover:text-gray-800">
-							Forgot Password?
-						</button>
+					<div className="flex items-center justify-between space-x-2">
+						<span className="text-gray-600">Forgot Password?</span>
+						<Button
+							type="button"
+							className="text-gray-600 font-bold px-4 py-2 rounded-md hover:bg-gray-200 flex items-center"
+						>
+							Reset
+						</Button>
 					</div>
 				</form>
 				<SocialLogin />

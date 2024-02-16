@@ -9,10 +9,13 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
+import { IoEye, IoEyeOff } from "react-icons/io5";
 import SocialLogin from "./SocialLogin";
 
 const RegisterForm = ({ changeMethod }: { changeMethod: () => void }) => {
 	const [isLoading, setIsLoading] = useState(false);
+	const [isPassVisible, setIsPassVisible] = useState(false);
+	const [isConfirmPassVisible, setIsConfirmPassVisible] = useState(false);
 	const router = useRouter();
 	const {
 		register,
@@ -95,13 +98,26 @@ const RegisterForm = ({ changeMethod }: { changeMethod: () => void }) => {
 						}
 					/>
 					<Input
+						type={isPassVisible ? "text" : "password"}
 						{...register("password", {
 							required: true,
-							pattern:
-								/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z\d\s]).{8,}$/,
+							minLength: 8,
 						})}
 						required
 						label="Password"
+						endContent={
+							<button
+								className="focus:outline-none"
+								type="button"
+								onClick={() => setIsPassVisible(!isPassVisible)}
+							>
+								{isPassVisible ? (
+									<IoEyeOff className="text-2xl text-default-400 pointer-events-none" />
+								) : (
+									<IoEye className="text-2xl text-default-400 pointer-events-none" />
+								)}
+							</button>
+						}
 						disabled={isLoading}
 						variant="underlined"
 						color={errors.password ? "danger" : "default"}
@@ -110,13 +126,30 @@ const RegisterForm = ({ changeMethod }: { changeMethod: () => void }) => {
 						}
 					/>
 					<Input
+						type={isConfirmPassVisible ? "text" : "password"}
 						{...register("confirmPassword", {
 							required: true,
-							pattern:
-								/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z\d\s]).{8,}$/,
+							minLength: 8,
 						})}
 						required
 						label="Confirm Password"
+						endContent={
+							<button
+								className="focus:outline-none"
+								type="button"
+								onClick={() =>
+									setIsConfirmPassVisible(
+										!isConfirmPassVisible
+									)
+								}
+							>
+								{isConfirmPassVisible ? (
+									<IoEyeOff className="text-2xl text-default-400 pointer-events-none" />
+								) : (
+									<IoEye className="text-2xl text-default-400 pointer-events-none" />
+								)}
+							</button>
+						}
 						disabled={isLoading}
 						variant="underlined"
 						color={errors.confirmPassword ? "danger" : "default"}
@@ -136,6 +169,8 @@ const RegisterForm = ({ changeMethod }: { changeMethod: () => void }) => {
 						>
 							Register
 						</Button>
+					</div>
+					<div className="flex items-center justify-between space-x-2">
 						<span className="text-gray-600">
 							Already have an account?
 						</span>

@@ -74,17 +74,14 @@ export async function POST(request: NextRequest) {
 export async function PUT(request: NextRequest) {
 	try {
 		const data = await request.json();
-		const { id, changeType } = data;
+		const { cartId, newQuantity } = data;
 
 		const updatedCartQuantity = await prisma.cart.update({
 			where: {
-				id,
+				id: cartId,
 			},
 			data: {
-				quantity:
-					changeType === "increase"
-						? { increment: 1 }
-						: { decrement: 1 },
+				quantity: newQuantity,
 			},
 			include: {
 				product: true,

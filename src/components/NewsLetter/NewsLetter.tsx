@@ -1,5 +1,6 @@
 "use client";
 
+import { navbarHiddenUrl } from "@/app/utils/data";
 import { usePathname } from "next/navigation";
 
 const NewsLetter = () => {
@@ -15,11 +16,7 @@ const NewsLetter = () => {
 				backgroundBlendMode: "multiply",
 			}}
 			className={`text-center py-20 lg:py-28 px-6 ${
-				(pathname === "/dashboard" ||
-					pathname === "/dashboard/items" ||
-					pathname === "/dashboard/additem" ||
-					pathname === "/dashboard/users") &&
-				"hidden"
+				navbarHiddenUrl.includes(pathname) ? "hidden" : ""
 			}`}
 		>
 			<div className="md:w-3/4 lg:w-1/2 mx-auto text-white">

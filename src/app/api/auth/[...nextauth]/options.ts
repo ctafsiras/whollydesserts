@@ -55,6 +55,7 @@ export const options: NextAuthOptions = {
 	],
 	pages: {
 		signIn: "/authentication",
+		error: "/authentication",
 	},
 	debug: process.env.NODE_ENV === "development",
 	session: {

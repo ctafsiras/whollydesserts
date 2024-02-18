@@ -13,4 +13,11 @@ const roleOptions = [
 	{ name: "User", uid: "user" },
 ];
 
-export { columns, roleOptions };
+const navbarHiddenUrl = [
+	"/dashboard",
+	"/dashboard/users",
+	"/dashboard/items",
+	"/dashboard/additem",
+];
+
+export { columns, navbarHiddenUrl, roleOptions };

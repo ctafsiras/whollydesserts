@@ -59,9 +59,9 @@ const UserDashboard = ({ user }: { user: User }) => {
 	};
 
 	return (
-		<section className="py-10 px-20">
+		<section className="py-10 lg:px-20">
 			<div className="flex justify-between items-center">
-				<div>
+				<div className="flex lg:flex-col items-center">
 					<Avatar
 						src={user.image}
 						className="w-20 h-20 text-large"
@@ -105,7 +105,7 @@ const UserDashboard = ({ user }: { user: User }) => {
 					className="font-sans mt-4 space-y-5"
 					onSubmit={handleSubmit(onSubmit)}
 				>
-					<div className="flex gap-10">
+					<div className="flex flex-col lg:flex-row gap-x-10 gap-y-5">
 						<Input
 							{...register("name", {
 								required: true,
@@ -152,20 +152,18 @@ const UserDashboard = ({ user }: { user: User }) => {
 						color="success"
 						className="max-w-md"
 					/>
-					<div className="">
-						<Button
-							color="success"
-							isLoading={isLoading}
-							type="submit"
-							disabled={
-								watch("name") === user.name &&
-								watch("email") === user.email &&
-								watch("image") === user.image
-							}
-						>
-							Save Changes
-						</Button>
-					</div>
+					<Button
+						color="success"
+						isLoading={isLoading}
+						type="submit"
+						disabled={
+							watch("name") === user.name &&
+							watch("email") === user.email &&
+							watch("image") === user.image
+						}
+					>
+						Save Changes
+					</Button>
 				</form>
 			</div>
 		</section>

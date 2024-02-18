@@ -2,6 +2,7 @@
 
 import UserContext from "@/app/contexts/UserProvider";
 import useCart from "@/app/hooks/useCart";
+import { navbarHiddenUrl } from "@/app/utils/data";
 import {
 	Avatar,
 	Button,
@@ -20,7 +21,7 @@ import {
 import { signOut } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useContext, useState } from "react";
 import Logo from "../../../public/assets/images/logo.png";
 import "./Navbar.css";
@@ -28,7 +29,7 @@ import "./Navbar.css";
 const Navbar = () => {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 	const pathname = usePathname();
-	const { id, name, email, image } = useContext(UserContext);
+	const { id, name, email, image, role } = useContext(UserContext);
 	const { cart } = useCart();
 
 	const navItems = [
@@ -44,13 +45,7 @@ const Navbar = () => {
 			shouldHideOnScroll
 			isBordered
 			maxWidth="xl"
-			className={`${
-				(pathname === "/dashboard" ||
-					pathname === "/dashboard/items" ||
-					pathname === "/dashboard/additem" ||
-					pathname === "/dashboard/users") &&
-				"hidden"
-			}`}
+			className={navbarHiddenUrl.includes(pathname) ? "hidden" : ""}
 		>
 			<NavbarContent>
 				<NavbarMenuToggle
@@ -120,7 +115,7 @@ const Navbar = () => {
 								href={"/dashboard"}
 								key="dashboard"
 							>
-								Dashboard
+								{role === "admin" ? "Dashboard" : "Profile"}
 							</DropdownItem>
 							<DropdownItem
 								as={Link}

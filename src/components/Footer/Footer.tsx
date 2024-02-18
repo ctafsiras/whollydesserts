@@ -1,5 +1,6 @@
 "use client";
 
+import { navbarHiddenUrl } from "@/app/utils/data";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 
@@ -8,11 +9,7 @@ const Footer = () => {
 	return (
 		<footer
 			className={`bg-[#29292A] text-white px-5 py-6 pt-20 ${
-				(pathname === "/dashboard" ||
-					pathname === "/dashboard/items" ||
-					pathname === "/dashboard/additem" ||
-					pathname === "/dashboard/users") &&
-				"hidden"
+				navbarHiddenUrl.includes(pathname) ? "hidden" : ""
 			}`}
 		>
 			<section className="grid gap-y-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 justify-between items-start">

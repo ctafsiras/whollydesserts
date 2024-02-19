@@ -1,3 +1,6 @@
+"use client";
+
+import UserContext from "@/app/contexts/UserProvider";
 import {
 	Avatar,
 	Button,
@@ -7,14 +10,13 @@ import {
 	DropdownTrigger,
 	Input,
 } from "@nextui-org/react";
-import { User } from "@prisma/client";
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { BsThreeDots } from "react-icons/bs";
 
-const UserDashboard = ({ user }: { user: User }) => {
+const ProfileUpdateForm = () => {
 	const items = [
 		{
 			key: "new",
@@ -34,6 +36,7 @@ const UserDashboard = ({ user }: { user: User }) => {
 		},
 	];
 	const [isLoading, setIsLoading] = useState(false);
+	const user = useContext(UserContext);
 
 	const {
 		register,
@@ -57,7 +60,6 @@ const UserDashboard = ({ user }: { user: User }) => {
 			}
 		});
 	};
-
 	return (
 		<section className="py-10 lg:px-20">
 			<div className="flex justify-between items-center">
@@ -114,13 +116,12 @@ const UserDashboard = ({ user }: { user: User }) => {
 							})}
 							type="text"
 							label="Name"
-							variant="flat"
-							defaultValue={user.name}
+							variant="bordered"
+							defaultValue={user.name || ""}
 							isDisabled={isLoading}
 							errorMessage={errors.name && "Name is required"}
 							color={!!errors.name ? "danger" : "success"}
 							className="max-w-md"
-							isRequired
 						/>
 						<Input
 							{...register("email", {
@@ -130,16 +131,13 @@ const UserDashboard = ({ user }: { user: User }) => {
 							})}
 							type="email"
 							label="Email"
-							variant="flat"
-							defaultValue={user.email}
+							variant="bordered"
 							isDisabled={isLoading}
-							isInvalid={!!errors.email}
 							color={!!errors.email ? "danger" : "success"}
 							errorMessage={
 								errors.email && "Please enter a valid email"
 							}
 							className="max-w-md"
-							isRequired
 						/>
 					</div>
 					<Input
@@ -147,7 +145,7 @@ const UserDashboard = ({ user }: { user: User }) => {
 						type="text"
 						label="Image"
 						isDisabled={isLoading}
-						variant={"flat"}
+						variant={"bordered"}
 						defaultValue={user.image}
 						color="success"
 						className="max-w-md"
@@ -170,4 +168,4 @@ const UserDashboard = ({ user }: { user: User }) => {
 	);
 };
 
-export default UserDashboard;
+export default ProfileUpdateForm;

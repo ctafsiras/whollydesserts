@@ -112,8 +112,10 @@ const Navbar = () => {
 							</DropdownItem>
 							<DropdownItem
 								as={Link}
-								href={"/dashboard"}
-								key="dashboard"
+								href={
+									role === "admin" ? "/dashboard" : "/profile"
+								}
+								key={role === "admin" ? "dashboard" : "profile"}
 							>
 								{role === "admin" ? "Dashboard" : "Profile"}
 							</DropdownItem>
@@ -160,34 +162,6 @@ const Navbar = () => {
 					</NavbarMenuItem>
 				))}
 			</NavbarMenu>
-			{/* <nav className="hidden lg:block">
-					<ul className="flex gap-10 font-sans">
-						{id && (
-							<Dropdown>
-								<DropdownTrigger>
-									<li className="nav-link flex items-center gap-2 uppercase">
-										Pages
-										<FaChevronDown />
-									</li>
-								</DropdownTrigger>
-								<DropdownMenu
-									aria-label="Static Actions"
-									className="text-black font-sans"
-								>
-									<DropdownItem
-										key="dashboard"
-										onClick={() =>
-											router.push("/dashboard")
-										}
-									>
-										Dashboard
-									</DropdownItem>
-								</DropdownMenu>
-							</Dropdown>
-						)}
-					</ul>
-				</nav>
-				<div className="flex gap-6"></div> */}
 		</NextuiNavbar>
 	);
 };

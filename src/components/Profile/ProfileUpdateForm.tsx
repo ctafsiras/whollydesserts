@@ -9,6 +9,7 @@ import {
 	DropdownMenu,
 	DropdownTrigger,
 	Input,
+	Spinner,
 } from "@nextui-org/react";
 import axios from "axios";
 import { useContext, useState } from "react";
@@ -60,6 +61,13 @@ const ProfileUpdateForm = () => {
 			}
 		});
 	};
+	if (!user.id) {
+		return (
+			<div className="h-screen flex justify-center items-center ">
+				<Spinner size="lg" />
+			</div>
+		);
+	}
 	return (
 		<section className="py-10 lg:px-20">
 			<div className="flex justify-between items-center">
@@ -132,11 +140,10 @@ const ProfileUpdateForm = () => {
 							type="email"
 							label="Email"
 							variant="bordered"
+							defaultValue={user.email || ""}
 							isDisabled={isLoading}
+							errorMessage={errors.email && "Email is required"}
 							color={!!errors.email ? "danger" : "success"}
-							errorMessage={
-								errors.email && "Please enter a valid email"
-							}
 							className="max-w-md"
 						/>
 					</div>

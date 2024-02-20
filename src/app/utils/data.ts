@@ -18,6 +18,9 @@ const navbarHiddenUrl = [
 	"/dashboard/users",
 	"/dashboard/items",
 	"/dashboard/additem",
+	"/profile",
+	"/profile/addressbook",
+	"/profile/ordereditems",
 ];
 
 export { columns, navbarHiddenUrl, roleOptions };

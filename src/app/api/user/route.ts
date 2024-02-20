@@ -23,6 +23,7 @@ export async function GET(request: NextRequest) {
 		return Response.json({ ...user });
 	} catch (err) {
 		console.error(err);
+		return new Response("Internal Server Error", { status: 500 });
 	}
 }
 export async function PUT(request: NextRequest) {

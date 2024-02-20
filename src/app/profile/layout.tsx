@@ -1,3 +1,4 @@
+import Sidebar from "@/components/Profile/Sidebar/Sidebar";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -10,9 +11,9 @@ export default function ProfileLayout({
 	children: React.ReactNode;
 }) {
 	return (
-		<main className="flex">
-			<div className="w-3/12 bg-cyan-800" />
-			<section className="w-full">{children}</section>
+		<main className="flex h-screen w-full">
+			<Sidebar />
+			<section className="w-9/12 py-5 px-10">{children}</section>
 		</main>
 	);
 }

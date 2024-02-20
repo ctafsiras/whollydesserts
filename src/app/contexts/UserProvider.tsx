@@ -1,32 +1,22 @@
 "use client";
 
 import { User } from "@prisma/client";
+import axios from "axios";
 import { useSession } from "next-auth/react";
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext } from "react";
 
 const UserContext = createContext({} as User);
 
-export const UserProvider = ({ children }: { children: React.ReactNode }) => {
-	const [user, setUser] = useState({} as User);
+export const UserProvider = async ({
+	children,
+}: {
+	children: React.ReactNode;
+}) => {
 	const { data: session } = useSession();
+	const email = session?.user?.email;
 
-	useEffect(() => {
-		const fetchUserData = async () => {
-			try {
-				if (session?.user?.email) {
-					const response = await fetch(
-						`/api/user?email=${session?.user?.email}`
-					);
-					const data = await response.json();
-					setUser(data);
-				}
-			} catch (error) {
-				console.error("Error fetching user data:", error);
-			}
-		};
-
-		fetchUserData();
-	}, [session?.user?.email]);
+	const res = await axios.get(`/api/user?email=${email}`);
+	const user = res.data;
 
 	return <UserContext.Provider value={user}>{children}</UserContext.Provider>;
 };

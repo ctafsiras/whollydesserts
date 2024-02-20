@@ -1,11 +1,11 @@
-import prisma from "@/app/libs/prismadb";
+import db from "@/app/libs/prismadb";
 import { NextRequest } from "next/server";
 
 export async function POST(request: NextRequest) {
 	try {
 		const { id, productId } = await request.json();
 
-		const user = await prisma.user.findUnique({
+		const user = await db.user.findUnique({
 			where: { id },
 		});
 
@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
 			return Response.json({ error: "User not found" }, { status: 404 });
 		}
 
-		const product = await prisma.product.findUnique({
+		const product = await db.product.findUnique({
 			where: { id: productId },
 		});
 
@@ -24,7 +24,7 @@ export async function POST(request: NextRequest) {
 			);
 		}
 
-		const cartItemExist = await prisma.cart.findFirst({
+		const cartItemExist = await db.cart.findFirst({
 			where: {
 				userId: id,
 				productId: productId,
@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
 		});
 
 		if (cartItemExist) {
-			const cartItem = await prisma.cart.update({
+			const cartItem = await db.cart.update({
 				where: {
 					id: cartItemExist.id,
 				},
@@ -52,7 +52,7 @@ export async function POST(request: NextRequest) {
 			});
 			return Response.json(cartItem);
 		} else {
-			const cartItem = await prisma.cart.create({
+			const cartItem = await db.cart.create({
 				data: {
 					userId: id,
 					productId: productId,
@@ -76,7 +76,7 @@ export async function PUT(request: NextRequest) {
 		const data = await request.json();
 		const { cartId, newQuantity } = data;
 
-		const updatedCartQuantity = await prisma.cart.update({
+		const updatedCartQuantity = await db.cart.update({
 			where: {
 				id: cartId,
 			},
@@ -106,7 +106,7 @@ export async function GET(request: NextRequest) {
 			});
 		}
 
-		const cartItems = await prisma.cart.findMany({
+		const cartItems = await db.cart.findMany({
 			where: {
 				userId,
 			},
@@ -135,7 +135,7 @@ export async function DELETE(request: NextRequest) {
 			});
 		}
 
-		const isCartExists = await prisma.cart.findUnique({
+		const isCartExists = await db.cart.findUnique({
 			where: {
 				id,
 			},
@@ -149,7 +149,7 @@ export async function DELETE(request: NextRequest) {
 			});
 		}
 
-		await prisma.cart.delete({
+		await db.cart.delete({
 			where: {
 				id,
 			},

@@ -1,4 +1,4 @@
-import prisma from "@/app/libs/prismadb";
+import db from "@/app/libs/prismadb";
 import { type NextRequest } from "next/server";
 
 export async function GET(request: NextRequest) {
@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
 	}
 
 	try {
-		const user = await prisma.user.findUnique({
+		const user = await db.user.findUnique({
 			where: {
 				email,
 			},
@@ -30,7 +30,7 @@ export async function PUT(request: NextRequest) {
 	const data = await request.json();
 	const { id, ...updatedData } = data;
 
-	const updatedUser = await prisma.user.update({
+	const updatedUser = await db.user.update({
 		where: {
 			id: id,
 		},

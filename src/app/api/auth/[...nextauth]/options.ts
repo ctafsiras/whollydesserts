@@ -1,4 +1,4 @@
-import prisma from "@/app/libs/prismadb";
+import db from "@/app/libs/prismadb";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import bcrypt from "bcrypt";
 import type { NextAuthOptions } from "next-auth";
@@ -8,7 +8,7 @@ import GoogleProvider from "next-auth/providers/google";
 import InstagramProvider from "next-auth/providers/instagram";
 
 export const options: NextAuthOptions = {
-	adapter: PrismaAdapter(prisma),
+	adapter: PrismaAdapter(db),
 	providers: [
 		CredentialsProvider({
 			name: "credentials",
@@ -21,7 +21,7 @@ export const options: NextAuthOptions = {
 					throw new Error("Email & Password is required");
 				}
 
-				const user = await prisma.user.findUnique({
+				const user = await db.user.findUnique({
 					where: {
 						email: credentials.email,
 					},

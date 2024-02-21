@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { useUser } from "../hooks/useUser";
 
 export default function Dashboard() {
-	const { user, isPending } = useUser();
+	const { data: user, isPending } = useUser();
 	const router = useRouter();
 
 	if (!isPending && user) {

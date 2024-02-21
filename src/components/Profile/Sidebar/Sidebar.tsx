@@ -23,7 +23,7 @@ const Sidebar = () => {
 	return (
 		<section className="w-3/12 h-lvh px-10 py-5 bg-cyan-800 text-white">
 			<h1 className="text-2xl text-center font-sans font-bold line-clamp-1">
-				Hello, {isPending ? "Loading..." : user.name}
+				Hello, {isPending ? "Loading..." : user?.name}
 			</h1>
 			<ul className="mt-5 text-xl font-sans uppercase list-inside list-disc">
 				{navLinks.map((link) => (

@@ -10,7 +10,7 @@ import { useUser } from "../hooks/useUser";
 export default function Auth() {
 	const [authMethod, setAuthMethod] = useState("register");
 	const router = useRouter();
-	const { user, isPending } = useUser();
+	const { data: user, isPending } = useUser();
 
 	if (!isPending && user) {
 		router.push("/menu");

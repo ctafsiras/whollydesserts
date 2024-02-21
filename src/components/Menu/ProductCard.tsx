@@ -1,29 +1,29 @@
-import UserContext from "@/app/contexts/UserProvider";
 import useCart from "@/app/hooks/useCart";
+import { useUser } from "@/app/hooks/useUser";
 import { Button, Image, useDisclosure } from "@nextui-org/react";
 import { Product } from "@prisma/client";
 import axios from "axios";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import toast from "react-hot-toast";
 import LoginModal from "./LoginModal";
 
 const ProductCard = ({ product }: { product: Product }) => {
 	const { isOpen, onOpen, onOpenChange } = useDisclosure();
 	const [isLoading, setIsLoading] = useState(false);
-	const { id } = useContext(UserContext);
+	const { data: user, isFetched } = useUser();
 	const { refetch } = useCart();
 
 	const handleAddToCart = async (productId: string) => {
 		setIsLoading(true);
 
-		if (!id) {
+		if (isFetched && !user?.id) {
 			onOpen();
 			setIsLoading(false);
 			return;
 		}
 
 		axios
-			.post("/api/cart", { productId, id })
+			.post("/api/cart", { productId, id: user?.id })
 			.then((res) => {
 				if (res.data.id) {
 					refetch();
@@ -38,7 +38,7 @@ const ProductCard = ({ product }: { product: Product }) => {
 	};
 	return (
 		<>
-			{!id && (
+			{!user?.id && (
 				<LoginModal
 					isOpen={isOpen}
 					onOpenChange={onOpenChange}

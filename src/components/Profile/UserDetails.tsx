@@ -1,11 +1,13 @@
 "use client";
 
-import UserContext from "@/app/contexts/UserProvider";
+import { useUser } from "@/app/hooks/useUser";
 import { Avatar } from "@nextui-org/react";
-import { useContext } from "react";
 
 const UserDetails = () => {
-	const user = useContext(UserContext);
+	const { data: user, error, isPending } = useUser();
+
+	if (error) return <div>{error.name}</div>;
+	if (isPending) return <div>Loading...</div>;
 
 	return (
 		<div>

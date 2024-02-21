@@ -1,7 +1,7 @@
 "use client";
 
-import UserContext from "@/app/contexts/UserProvider";
 import useCart from "@/app/hooks/useCart";
+import { useUser } from "@/app/hooks/useUser";
 import { navbarHiddenUrl } from "@/app/utils/data";
 import {
 	Avatar,
@@ -22,14 +22,14 @@ import { signOut } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import Logo from "../../../public/assets/images/logo.png";
 import "./Navbar.css";
 
 const Navbar = () => {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 	const pathname = usePathname();
-	const { id, name, email, image, role } = useContext(UserContext);
+	const { data: user } = useUser();
 	const { cart } = useCart();
 
 	const navItems = [
@@ -85,7 +85,7 @@ const Navbar = () => {
 				justify="end"
 				className="font-sans"
 			>
-				{id ? (
+				{user?.id ? (
 					<Dropdown placement="bottom-end">
 						<DropdownTrigger>
 							<Avatar
@@ -93,9 +93,9 @@ const Navbar = () => {
 								as="button"
 								className="transition-transform font-sans"
 								color="secondary"
-								name={name}
+								name={user?.name}
 								size="sm"
-								src={image}
+								src={user?.image}
 							/>
 						</DropdownTrigger>
 						<DropdownMenu
@@ -108,16 +108,24 @@ const Navbar = () => {
 								className="h-14 gap-2"
 							>
 								<p className="font-semibold">Signed in as</p>
-								<p className="font-semibold">{email}</p>
+								<p className="font-semibold">{user?.email}</p>
 							</DropdownItem>
 							<DropdownItem
 								as={Link}
 								href={
-									role === "admin" ? "/dashboard" : "/profile"
+									user?.role === "admin"
+										? "/dashboard"
+										: "/profile"
 								}
-								key={role === "admin" ? "dashboard" : "profile"}
+								key={
+									user?.role === "admin"
+										? "dashboardKey"
+										: "profileKey"
+								}
 							>
-								{role === "admin" ? "Dashboard" : "Profile"}
+								{user?.role === "admin"
+									? "Dashboard"
+									: "Profile"}
 							</DropdownItem>
 							<DropdownItem
 								as={Link}

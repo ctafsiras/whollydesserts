@@ -11,9 +11,9 @@ export default function ProfileLayout({
 	children: React.ReactNode;
 }) {
 	return (
-		<main className="flex h-screen w-full">
+		<main className="flex items-start w-full">
 			<Sidebar />
-			<section className="w-9/12 py-5 px-10">{children}</section>
+			<section className="w-full py-5">{children}</section>
 		</main>
 	);
 }

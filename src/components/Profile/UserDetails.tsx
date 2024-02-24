@@ -10,7 +10,7 @@ const UserDetails = () => {
 	if (isPending) return <div>Loading...</div>;
 
 	return (
-		<div>
+		<main>
 			<Avatar
 				src={user.image}
 				className="w-20 h-20 text-large"
@@ -18,7 +18,7 @@ const UserDetails = () => {
 
 			<h1>Name: {user.name}</h1>
 			<h1>Email: {user.email}</h1>
-		</div>
+		</main>
 	);
 };
 

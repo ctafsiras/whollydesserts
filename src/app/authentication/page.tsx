@@ -1,35 +1,29 @@
 "use client";
 
 import LoginForm from "@/components/Authentication/LoginForm";
-import AddItemForm from "@/components/Authentication/RegisterForm";
-import { Spinner } from "@nextui-org/react";
+import SignupForm from "@/components/Authentication/RegisterForm";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useUser } from "../hooks/useUser";
 
 export default function Auth() {
 	const [authMethod, setAuthMethod] = useState("register");
 	const router = useRouter();
-	const { data: user, isPending } = useUser();
+	const { data: user } = useUser();
 
-	if (!isPending && user) {
-		router.push("/menu");
-	} else {
-		return (
-			<main>
-				{isPending ? (
-					<div className="flex items-center justify-center h-screen">
-						<Spinner
-							color="primary"
-							labelColor="foreground"
-						/>
-					</div>
-				) : authMethod === "login" ? (
-					<LoginForm changeMethod={() => setAuthMethod("register")} />
-				) : (
-					<AddItemForm changeMethod={() => setAuthMethod("login")} />
-				)}
-			</main>
-		);
-	}
+	useEffect(() => {
+		if (user) {
+			router.push("/menu");
+		}
+	}, [user, router]);
+
+	return (
+		<main>
+			{authMethod === "login" ? (
+				<LoginForm changeMethod={() => setAuthMethod("register")} />
+			) : (
+				<SignupForm changeMethod={() => setAuthMethod("login")} />
+			)}
+		</main>
+	);
 }

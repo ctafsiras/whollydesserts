@@ -9,7 +9,12 @@ export const metadata: Metadata = {
 export default function Profile() {
 	return (
 		<main>
-			<h1 className="text-2xl font-bold font-sans">My Profile</h1>
+			<h1 className="text-2xl font-bold font-sans uppercase">
+				Welcome back
+			</h1>
+			<h1 className="text-2xl text-center font-bold font-sans uppercase">
+				My Profile
+			</h1>
 			<UserDetails />
 		</main>
 	);

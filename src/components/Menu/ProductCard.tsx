@@ -3,6 +3,7 @@ import { useUser } from "@/app/hooks/useUser";
 import { Button, Image, useDisclosure } from "@nextui-org/react";
 import { Product } from "@prisma/client";
 import axios from "axios";
+import Link from "next/link";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import LoginModal from "./LoginModal";
@@ -81,12 +82,17 @@ const ProductCard = ({ product }: { product: Product }) => {
 					>
 						Add to Cart
 					</Button>
-					<button
-						className="block select-none rounded-lg bg-gradient-to-r from-amber-200 to-amber-500 py-3 px-6 text-center align-middle font-sans text-xs font-semibold uppercase transition-all duration-200 ease-in-out active:scale-105 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none ml-2 hover:shadow-lg hover:from-blue-500 hover:to-green-500 text-white hover:shadow-blue-500"
+					<Button
+						as={Link}
 						type="button"
+						href={`/checkout?productId=${product.id}`}
+						className="font-sans font-semibold uppercase"
+						color="success"
+						variant="faded"
+						radius="sm"
 					>
-						Order Now
-					</button>
+						Buy Now
+					</Button>
 				</div>
 			</div>
 		</>

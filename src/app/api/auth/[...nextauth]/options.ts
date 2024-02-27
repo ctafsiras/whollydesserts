@@ -3,9 +3,6 @@ import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import bcrypt from "bcrypt";
 import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import FacebookProvider from "next-auth/providers/facebook";
-import GoogleProvider from "next-auth/providers/google";
-import InstagramProvider from "next-auth/providers/instagram";
 
 export const options: NextAuthOptions = {
 	adapter: PrismaAdapter(db),
@@ -13,8 +10,16 @@ export const options: NextAuthOptions = {
 		CredentialsProvider({
 			name: "credentials",
 			credentials: {
-				email: { label: "email", type: "text" },
-				password: { label: "password", type: "password" },
+				email: {
+					label: "Email:",
+					type: "text",
+					placeholder: "example@gmail.com",
+				},
+				password: {
+					label: "Password:",
+					type: "password",
+					placeholder: "********",
+				},
 			},
 			async authorize(credentials) {
 				if (!credentials?.email && !credentials?.password) {
@@ -24,6 +29,10 @@ export const options: NextAuthOptions = {
 				const user = await db.user.findUnique({
 					where: {
 						email: credentials.email,
+					},
+					include: {
+						shippingAddresses: true,
+						cart: true,
 					},
 				});
 				if (!user || !user?.hashedPassword) {
@@ -40,22 +49,44 @@ export const options: NextAuthOptions = {
 				return user;
 			},
 		}),
-		GoogleProvider({
-			clientId: process.env.GOOGLE_ID!,
-			clientSecret: process.env.GOOGLE_SECRET!,
-		}),
-		FacebookProvider({
-			clientId: process.env.FACEBOOK_ID!,
-			clientSecret: process.env.FACEBOOK_SECRET!,
-		}),
-		InstagramProvider({
-			clientId: process.env.INSTAGRAM_ID!,
-			clientSecret: process.env.INSTAGRAM_SECRET!,
-		}),
 	],
-	pages: {
-		signIn: "/authentication",
-		error: "/authentication",
+	callbacks: {
+		async jwt({ token, user, session }) {
+			if (user) {
+				return {
+					...token,
+					id: user.id,
+					emailVerified: user.emailVerified,
+					hashedPassword: user.hashedPassword,
+					image: user.image,
+					role: user.role,
+					createdAt: user.createdAt,
+					updatedAt: user.updatedAt,
+					shippingAddresses: user.shippingAddresses,
+					cart: user.cart,
+				};
+			}
+
+			return token;
+		},
+		async session({ session, token, user }) {
+			return {
+				...session,
+				user: {
+					id: token.id,
+					name: token.name,
+					email: token.email,
+					image: token.picture,
+					emailVerified: token.emailVerified,
+					hashedPassword: token.hashedPassword,
+					role: token.role,
+					createdAt: token.createdAt,
+					updatedAt: token.updatedAt,
+					shippingAddresses: token.shippingAddresses,
+					cart: token.cart,
+				},
+			};
+		},
 	},
 	debug: process.env.NODE_ENV === "development",
 	session: {
